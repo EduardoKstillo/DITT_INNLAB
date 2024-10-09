@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Notificaciones</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="invitations.length > 0; else noInvitations">
+    <ion-item *ngFor="let invitation of invitations">
+      <ion-label>
+        <h2>{{ invitation.project.name }}</h2>
+        <p>Invitado por: {{ invitation.inviter.email }}</p>
+        <p>Estado: {{ invitation.status }}</p>
+      </ion-label>
+
+      <ion-button slot="end" color="success" (click)="acceptInvitation(invitation.id)">
+        Aceptar
+      </ion-button>
+      <ion-button slot="end" color="danger" (click)="rejectInvitation(invitation.id)">
+        Rechazar
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ng-template #noInvitations>
+    <ion-item>
+      <ion-label>No tienes notificaciones.</ion-label>
+    </ion-item>
+  </ng-template>
+</ion-content>

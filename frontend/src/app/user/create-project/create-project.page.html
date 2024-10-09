@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>Crear Proyecto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="create-project-container">
+    <form #createProjectForm="ngForm" (ngSubmit)="createProject()" novalidate>
+      
+      <!-- Nombre del Proyecto -->
+       <div class="name-project">
+         <ion-input label="Nombre del Proyecto" label-placement="floating" fill="outline" placeholder="Nombre del proyecto" [clearInput]="true" [(ngModel)]="project.name" name="name" required>
+          <ion-icon slot="start" name="mail-outline" class="input-icon"></ion-icon>
+         </ion-input>
+        <div *ngIf="createProjectForm.submitted || createProjectForm.form.get('name')?.touched">
+          <div *ngIf="createProjectForm.form.get('name')?.errors?.['required']" class="error-message">
+            El nombre del proyecto es obligatorio.
+          </div>
+        </div>
+       </div>
+  
+      <!-- Descripción del Proyecto -->
+       <div class="div-description">
+         <ion-textarea label="Descripción" label-placement="floating" fill="outline" placeholder="Descripción del proyecto" [(ngModel)]="project.description" name="description" required>
+          <ion-icon slot="start" name="mail-outline" class="input-icon"></ion-icon>
+         </ion-textarea>
+       <div *ngIf="createProjectForm.submitted || createProjectForm.form.get('description')?.touched">
+         <div *ngIf="createProjectForm.form.get('description')?.errors?.['required']" class="error-message">
+           La descripción es obligatoria.
+         </div>
+       </div>
+       </div>
+  
+      <!-- Botón de Crear Proyecto -->
+      <ion-button expand="full" type="submit" class="create-project-btn" [disabled]="!createProjectForm.valid">Crear Proyecto</ion-button>
+    </form>
+  </div>
+
+</ion-content>

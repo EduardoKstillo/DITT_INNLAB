@@ -1,0 +1,47 @@
+ion-header {
+  background: #3a3a3a; // Color de fondo del encabezado
+}
+
+ion-toolbar {
+  --background: hsl(0, 0%, 7%);
+}
+
+.update-device-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 20px; /* Bordes redondeados */
+}
+
+ion-input {
+  --border-radius: 10px; /* Redondeo en los campos de entrada */
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Sombra en los campos */
+  background: #1E1E1E; /* Fondo oscuro para los inputs */
+}
+
+ion-select {
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Sombra en los campos */
+  background: #1E1E1E; /* Fondo oscuro para los inputs */
+}
+
+.update-device-btn {
+  --background: linear-gradient(135deg, #007aff, #00c6ff); /* Gradiente para el botón */
+  --color: #ffffff; /* Color del texto */
+  border-radius: 10px; /* Bordes redondeados */
+  margin-top: 20px;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra del botón */
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
+.input-icon {
+  color: #cccccc; 
+}

@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="profile-container">
+    <div class="profile-header">
+      <img src="../../../assets/images/profiledefault.avif" alt="Profile Picture" class="profile-picture" />
+      <h2 class="profile-name">{{ user.firstName }} {{ user.lastName }}</h2>
+      <p class="profile-status">Email: {{ user.email }}</p>
+      <ion-button color="primary" fill="clear" class="edit-button">Edit
+        <ion-icon name="create"></ion-icon>
+      </ion-button>
+    </div>
+
+    <div class="personal-info">
+      <h3>Información Personal</h3>
+      <ion-item>
+        <ion-label>DNI</ion-label>
+        <ion-note slot="end">{{ user.dni }}</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>Teléfono</ion-label>
+        <ion-note slot="end">{{ user.phone || 'N/A' }}</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>Universidad</ion-label>
+        <ion-note slot="end">{{ user.university || 'N/A' }}</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>Fecha de Nacimiento</ion-label>
+        <ion-note slot="end">{{ user.birthDate || 'N/A' }}</ion-note>
+      </ion-item>
+    </div>
+
+    <div class="projects">
+      <h3>Proyectos en los que pertenece</h3>
+      <ion-list>
+        <ion-item>
+          <ion-label>Proyecto 1</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Proyecto 2</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Proyecto 3</ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+
+  <!-- <div class="utilities">
+      <ion-list>
+        <ion-item routerLink="/downloads">
+          <ion-label>Descargas</ion-label>
+        </ion-item>
+      </ion-list>
+    </div> -->
+    <ion-button expand="full" color="danger" (click)="logout()">Cerrar Sesión</ion-button>
+</ion-content>
+

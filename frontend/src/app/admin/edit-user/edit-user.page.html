@@ -1,0 +1,10 @@
+<h1>Editar Usuario</h1>
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <label for="email">Email</label>
+  <input id="email" formControlName="email" type="email" />
+
+  <label for="password">Password (dejar en blanco si no se desea cambiar)</label>
+  <input id="password" formControlName="password" type="password" />
+
+  <button type="submit">Actualizar Usuario</button>
+</form>

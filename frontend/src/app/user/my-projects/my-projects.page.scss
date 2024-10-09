@@ -1,0 +1,13 @@
+ion-header {
+  background: #121212; // Color de fondo del encabezado
+}
+
+ion-toolbar {
+  --background: #121212;
+}
+
+ion-item {
+  margin-bottom: 10px;
+  background-color: #1E1E1E;
+  box-shadow: 0 1px 5px rgba(146, 146, 146, 0.363); /* Sombra en los campos */
+}

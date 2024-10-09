@@ -1,0 +1,30 @@
+<ion-modal>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Carrito de Dispositivos</ion-title>
+        <ion-buttons slot="end">
+          <ion-button color="light" (click)="dismiss()">Cerrar</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <ion-item *ngFor="let device of cart">
+          <ion-label>
+            <h2>{{ device.type }}</h2>
+            <p>{{ device.description }}</p>
+            <!-- <p>Cantidad: {{ device.selectedQuantity }}</p> -->
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+
+    <ion-footer>
+      <ion-button expand="block" color="primary" (click)="submitLoanRequest()">
+        Enviar Solicitud
+      </ion-button>
+    </ion-footer>
+  </ng-template>
+</ion-modal>

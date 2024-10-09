@@ -1,0 +1,99 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>Crear Dispositivo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="create-device-container">
+    <form #createDeviceForm="ngForm" (ngSubmit)="createDevice()" novalidate>
+
+      <!-- Tipo -->
+      <div class="input-container">
+        <ion-select label="Tipo" label-placement="floating" fill="outline" [(ngModel)]="deviceData.type" name="type" required>
+          <ion-icon slot="start" name="cube-outline" class="input-icon"></ion-icon>
+          <ion-select-option value="Mobile">Mobile</ion-select-option>
+          <ion-select-option value="Metaverso">Metaverso</ion-select-option>
+          <ion-select-option value="IoT">IoT</ion-select-option>
+        </ion-select>
+        <div *ngIf="createDeviceForm.submitted || createDeviceForm.form.get('status')?.touched">
+          <div *ngIf="createDeviceForm.form.get('type')?.errors?.['required']" class="error-message">
+            El tipo es obligatorio.
+          </div>
+        </div>
+      </div>
+      
+      <!-- Descripción -->
+      <div class="input-container">
+        <ion-input label="Descripción" label-placement="floating" fill="outline" placeholder="Descripción del dispositivo" [(ngModel)]="deviceData.description" name="description" required>
+          <ion-icon slot="start" name="information-circle-outline" class="input-icon"></ion-icon>
+        </ion-input>
+        <div *ngIf="createDeviceForm.submitted || createDeviceForm.form.get('description')?.touched">
+          <div *ngIf="createDeviceForm.form.get('description')?.errors?.['required']" class="error-message">
+            La descripción es obligatoria.
+          </div>
+        </div>
+      </div>
+
+      <!-- Características -->
+      <div class="input-container">
+        <ion-input label="Características" label-placement="floating" fill="outline" placeholder="Características del dispositivo" [(ngModel)]="deviceData.characteristics" name="characteristics" required>
+          <ion-icon slot="start" name="build-outline" class="input-icon"></ion-icon>
+        </ion-input>
+        <div *ngIf="createDeviceForm.submitted || createDeviceForm.form.get('characteristics')?.touched">
+          <div *ngIf="createDeviceForm.form.get('characteristics')?.errors?.['required']" class="error-message">
+            Las características son obligatorias.
+          </div>
+        </div>
+      </div>
+
+      <!-- Serie -->
+      <div class="input-container">
+        <ion-input label="Serie" label-placement="floating" fill="outline" placeholder="Serie del dispositivo" [(ngModel)]="deviceData.series" name="series" required>
+          <ion-icon slot="start" name="id-card-outline" class="input-icon"></ion-icon>
+        </ion-input>
+        <div *ngIf="createDeviceForm.submitted || createDeviceForm.form.get('series')?.touched">
+          <div *ngIf="createDeviceForm.form.get('series')?.errors?.['required']" class="error-message">
+            La serie es obligatoria.
+          </div>
+        </div>
+      </div>
+
+      <!-- Cantidad -->
+      <div class="input-container">
+        <ion-input label="Cantidad" label-placement="floating" fill="outline" placeholder="Cantidad del dispositivo" [(ngModel)]="deviceData.quantity" name="quantity" type="number" required>
+          <ion-icon slot="start" name="pricetag-outline" class="input-icon"></ion-icon>
+        </ion-input>
+        <div *ngIf="createDeviceForm.submitted || createDeviceForm.form.get('quantity')?.touched">
+          <div *ngIf="createDeviceForm.form.get('quantity')?.errors?.['required']" class="error-message">
+            La cantidad es obligatoria.
+          </div>
+        </div>
+      </div>
+
+      <!-- Adicional -->
+      <div class="input-container">
+        <ion-input label="Adicional" label-placement="floating" fill="outline" placeholder="Información adicional" [(ngModel)]="deviceData.additional" name="additional"></ion-input>
+      </div>
+
+      <!-- Color -->
+      <div class="input-container">
+        <ion-input label="Color" label-placement="floating" fill="outline" placeholder="Color del dispositivo" [(ngModel)]="deviceData.color" name="color" required>
+          <ion-icon slot="start" name="color-palette-outline" class="input-icon"></ion-icon>
+        </ion-input>
+        <div *ngIf="createDeviceForm.submitted || createDeviceForm.form.get('color')?.touched">
+          <div *ngIf="createDeviceForm.form.get('color')?.errors?.['required']" class="error-message">
+            El color es obligatorio.
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón de Crear Dispositivo -->
+      <ion-button expand="full" type="submit" class="create-device-btn" [disabled]="!createDeviceForm.valid">Crear Dispositivo</ion-button>
+    </form>
+</div>
+
+</ion-content>

@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Solicitudes de Préstamo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div>
+    <ion-item *ngFor="let request of loanRequests" (click)="viewRequestDetails(request.id)">
+      <ion-label>
+        <h2>{{ request.project.name }}</h2>
+        <p>Solicitante: {{ request.project.leader.email }}</p>
+        <p>Estado: {{ request.status }}</p>
+        <p>Propósito: {{ request.purpose }}</p>
+      </ion-label>
+    </ion-item>
+  </div>
+</ion-content>

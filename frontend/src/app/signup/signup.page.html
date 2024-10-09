@@ -1,0 +1,140 @@
+<ion-content class="ion-padding">
+  <div class="signup-container">
+
+    <!-- Header con ícono, línea, título y subtítulo -->
+    <div class="header-container">
+      <ion-icon class="header-icon" name="git-merge-outline"></ion-icon>
+      <div class="header-line"></div> <!-- Línea horizontal -->
+      <h1 class="header-title">
+        Crear una cuenta
+        <span class="sparkle">
+          <ion-icon name="rocket-sharp"></ion-icon>
+        </span>
+      </h1>
+      <p class="header-subtitle">
+        ¡Bienvenido! Por favor, introduzca sus datos.
+      </p>
+    </div>
+
+    <form #signupForm="ngForm" (ngSubmit)="register()" novalidate>
+
+      <!-- Nombre -->
+      <div class="div-name">
+        <ion-input label="Nombre" label-placement="floating" fill="outline" placeholder="Tu nombre"
+          [(ngModel)]="user.firstName" name="firstName" required>
+          <ion-icon slot="start" name="person-outline" class="input-icon"></ion-icon>
+        </ion-input>
+
+        <div *ngIf="signupForm.submitted || signupForm.form.get('firstName')?.touched">
+          <div *ngIf="signupForm.form.get('firstName')?.errors?.['required']" class="error-message">
+            El nombre es obligatorio.
+          </div>
+        </div>
+      </div>
+
+      <!-- Apellido -->
+      <div class="div-lastname">
+        <ion-input label="Apellido" label-placement="floating" fill="outline" placeholder="Tu apellido"
+          [(ngModel)]="user.lastName" name="lastName" required>
+          <ion-icon slot="start" name="people-outline" class="input-icon"></ion-icon>
+        </ion-input>
+        <div *ngIf="signupForm.submitted || signupForm.form.get('lastName')?.touched">
+          <div *ngIf="signupForm.form.get('lastName')?.errors?.['required']" class="error-message">
+            El apellido es obligatorio.
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Universidad -->
+      <div class="div-university">
+        <ion-input label="Universidad" label-placement="floating" fill="outline" placeholder="Tu universidad"
+          [(ngModel)]="user.university" name="university" required>
+          <ion-icon slot="start" name="school-outline" class="input-icon"></ion-icon>
+        </ion-input>
+        <div *ngIf="signupForm.submitted || signupForm.form.get('university')?.touched">
+          <div *ngIf="signupForm.form.get('university')?.errors?.['required']" class="error-message">
+            La universidad es obligatoria.
+          </div>
+        </div>
+      </div>
+
+
+      <!-- DNI -->
+      <div class="div-dni">
+        <ion-input label="DNI" label-placement="floating" fill="outline" placeholder="Tu DNI" [(ngModel)]="user.dni"
+          name="dni" required minlength="8" maxlength="8" type="tel">
+          <ion-icon slot="start" name="card-outline" class="input-icon"></ion-icon>
+        </ion-input>
+        <div *ngIf="signupForm.submitted || signupForm.form.get('dni')?.touched">
+          <div *ngIf="signupForm.form.get('dni')?.errors?.['required']" class="error-message">
+            El DNI es obligatorio.
+          </div>
+          <div *ngIf="signupForm.form.get('dni')?.errors?.['minlength']" class="error-message">
+            El DNI debe tener 8 dígitos.
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Email -->
+      <div class="div-email">
+        <ion-input label="Email" label-placement="floating" fill="outline" placeholder="email@domain.com"
+          [(ngModel)]="user.email" name="email" required email>
+          <ion-icon slot="start" name="mail-outline" class="input-icon"></ion-icon>
+        </ion-input>
+        <div *ngIf="signupForm.submitted || signupForm.form.get('email')?.touched">
+          <div *ngIf="signupForm.form.get('email')?.errors?.['required']" class="error-message">
+            El email es obligatorio.
+          </div>
+          <div *ngIf="signupForm.form.get('email')?.errors?.['email']" class="error-message">
+            Ingresa un email válido.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Contraseña -->
+      <div class="div-password">
+        <ion-input label="Contraseña" label-placement="floating" fill="outline" type="password" placeholder="Contraseña"
+          [(ngModel)]="user.password" name="password" required minlength="6">
+          <ion-icon slot="start" name="lock-closed-outline" class="input-icon"></ion-icon>
+        </ion-input>
+        <div *ngIf="signupForm.submitted || signupForm.form.get('password')?.touched">
+          <div *ngIf="signupForm.form.get('password')?.errors?.['required']" class="error-message">
+            La contraseña es obligatoria.
+          </div>
+          <div *ngIf="signupForm.form.get('password')?.errors?.['minlength']" class="error-message">
+            La contraseña debe tener al menos 6 caracteres.
+          </div>
+        </div>
+      </div>
+
+
+      <div class="div-password">
+        <ion-input label="Confirmar Contraseña" label-placement="floating" fill="outline" type="password"
+          placeholder="Confirmar contraseña" [(ngModel)]="confirmPassword" name="confirmPassword" required
+          minlength="6">
+          <ion-icon slot="start" name="lock-closed-outline" class="input-icon"></ion-icon>
+        </ion-input>
+        <div *ngIf="signupForm.submitted || signupForm.form.get('confirmPassword')?.touched">
+          <div *ngIf="confirmPassword !== user.password" class="error-message">
+            Las contraseñas no coinciden.
+          </div>
+        </div>
+      </div>
+
+      <!-- Confirmar Contraseña -->
+
+
+      <!-- Botón de Registro -->
+      <ion-button expand="full" type="submit" class="signup-btn"
+        [disabled]="!signupForm.valid || confirmPassword !== user.password">Registrarse</ion-button>
+
+    </form>
+
+    <div class="footer-text">
+      <p>¿Ya tienes una cuenta? <ion-router-link routerLink="/login">Inicia sesión</ion-router-link></p>
+    </div>
+  </div>
+</ion-content>

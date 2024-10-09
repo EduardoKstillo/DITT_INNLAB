@@ -1,0 +1,104 @@
+.login-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 20px; /* Bordes redondeados */
+}
+
+.page-title {
+  text-align: center;
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+ion-input {
+  --border-radius: 10px; /* Redondeo en los campos de entrada */
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Sombra en los campos */
+  background: #1E1E1E; /* Fondo oscuro para los inputs */
+}
+
+.login-btn {
+  --background: linear-gradient(135deg, #007aff, #00c6ff); /* Gradiente para el botón */
+  --color: #ffffff; /* Color del texto */
+  border-radius: 10px; /* Bordes redondeados */
+  margin-top: 20px;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra del botón */
+}
+
+.footer-text {
+  text-align: center;
+  color: #ffffff;
+  margin-top: 20px;
+}
+
+.footer-text ion-router-link {
+  color: #00c6ff; /* Color azul para el link */
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
+.input-icon {
+  color: #cccccc; 
+}
+
+ion-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 30px;
+}
+
+.header-container {
+  position: relative;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.header-icon {
+  font-size: 36px;
+  color: white;
+  display: inline-block;
+  vertical-align: middle;
+}
+.icon-eye {
+  color: #9c9c9c; 
+  font-size: 12px;
+}
+
+.header-line {
+  display: inline-block;
+  width: calc(100% - 50px); /* Ajusta el tamaño de la línea según la distancia desde el ícono */
+  height: 1px;
+  background-color: rgba(185, 185, 185, 0.589); /* Color de la línea */
+  margin-left: 10px; /* Espacio entre el ícono y la línea */
+  vertical-align: middle;
+}
+
+.header-title {
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.sparkle {
+  color: rgb(11, 138, 177);
+  vertical-align: middle;
+}
+
+.header-subtitle {
+  color: #a0a0a0;
+  font-size: 16px;
+  margin-top: 5px;
+  margin-bottom: 40px;
+}

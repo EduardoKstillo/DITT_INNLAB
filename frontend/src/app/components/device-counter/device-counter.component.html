@@ -1,0 +1,7 @@
+<div class="device-counter">
+  <div class="button-wrapper">
+    <button (click)="decrement()" [disabled]="isAtMin()">-</button>
+    <span class="counter-value">{{ value }}</span>
+    <button (click)="increment()" [disabled]="isAtMax()">+</button>
+  </div>
+</div>

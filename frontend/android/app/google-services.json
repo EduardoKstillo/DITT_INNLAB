@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "41092203741",
+    "project_id": "notificaciontest-2f2a8",
+    "storage_bucket": "notificaciontest-2f2a8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:41092203741:android:2472eb6d3129ff45b5c734",
+        "android_client_info": {
+          "package_name": "app.ditt.innlab"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmOwl9Fw0gK6rsrVPHS0bVBOjsg0Wnm7E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

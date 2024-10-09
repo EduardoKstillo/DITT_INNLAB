@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Proyectos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div>
+    <ion-item *ngFor="let project of projects" (click)="viewProjectDetails(project.id)">
+      <ion-label>
+        <h2>{{ project.name }}</h2>
+        <p>{{ project.description }}</p>
+        <p>Status: {{ project.status }}</p>
+      </ion-label>
+    </ion-item>
+  </div>
+
+  <ion-button expand="full" (click)="loadAllProjects()">Actualizar Proyectos</ion-button>
+</ion-content>

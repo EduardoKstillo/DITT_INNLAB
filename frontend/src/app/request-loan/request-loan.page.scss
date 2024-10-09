@@ -1,0 +1,27 @@
+.counter-button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Alinea a la izquierda para que no estén centrados */
+  gap: 10px; /* Añade espacio entre el contador y el botón */
+  width: 100%; /* Asegura que el botón se expanda al 100% del ancho */
+}
+
+ion-button {
+  width: 100%;
+}
+
+ion-modal {
+  --height: 50%;
+  --border-radius: 16px;
+  --box-shadow: 0 10px 15px -3px rgba(7, 7, 7, 0.925), 0 4px 6px -4px rgba(255, 255, 255, 0.979);
+}
+
+ion-modal::part(backdrop) {
+  background: rgb(0, 0, 0);
+  opacity: 1;
+}
+
+ion-modal ion-toolbar {
+  --background: #121212;
+  --color: white;
+}

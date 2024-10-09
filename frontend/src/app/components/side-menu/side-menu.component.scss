@@ -1,0 +1,60 @@
+.side-menu {
+  .profile-info {
+    text-align: center;
+    margin: 15px 0;
+
+    .profile-picture {
+      border-radius: 50%;
+      width: 70px; // Tamaño de la imagen
+      height: 70px; // Tamaño de la imagen
+      margin-bottom: 10px;
+      border: 3px solid #007aff; // Borde azul alrededor de la imagen
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); // Sombra para la imagen
+    }
+
+    .profile-name {
+      font-size: 24px;
+      margin: 5px 0;
+    }
+    .profile-email {
+      color: #a0a0a0;
+      font-size: 14px;
+      margin: 5px 0;
+    }
+  }
+
+  .menu-options {
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 15px; // Espaciado dentro de los items
+      cursor: pointer; // Cambiar el cursor al pasar sobre el item
+      color: white; // Color del texto
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1); // Línea divisoria entre items
+      font-size: 15px;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1); // Efecto hover
+        color: #007aff; // Cambiar color de texto en hover
+      }
+
+      ion-icon {
+        color: #cccccc; // Color de los iconos
+        font-size: 20px; // Tamaño de los iconos
+        margin-right: 10px; // Espaciado entre el icono y el texto
+      }
+    }
+  }
+
+  .logout-container {
+    margin: 15px; // Espacio alrededor del botón
+    position: absolute; // Posicionarlo en la parte inferior
+    bottom: 0; // Ponerlo al final del contenedor
+    left: 0; // Alinear a la izquierda
+    right: 0; // Alinear a la derecha
+  }
+
+  .logout-button {
+    width: 100%; // Hacer que el botón ocupe todo el ancho
+  }
+}

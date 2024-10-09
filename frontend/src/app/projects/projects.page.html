@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Mis Proyectos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="createProject()">
+        <ion-icon slot="icon-only" name="add-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <!-- Mostrar la lista de proyectos cargados -->
+    <ion-item *ngFor="let project of projects" (click)="viewProject(project.id)">
+      <ion-label>
+        <h2>{{ project.name }}</h2>
+        <p>{{ project.description }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Botón para crear un nuevo proyecto -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="createProject()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

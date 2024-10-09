@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>Detalles de la Solicitud</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card class="loanrequest-details" *ngIf="loanRequest">
+    <ion-card-header>
+      <ion-card-title>{{ loanRequest.project.name }}</ion-card-title>
+      <ion-card-subtitle><strong>Responsable:</strong> {{ loanRequest.project.leader.name }}</ion-card-subtitle>
+      <ion-card-subtitle><strong>Correo:</strong> {{ loanRequest.project.leader.email }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Objetivo:</strong> {{ loanRequest.purpose }}</p>
+      <p><strong>Fecha de solicitud:</strong> {{ loanRequest.startDate | date }}</p>
+      <p><strong>Fecha de entrega:</strong> {{ loanRequest.endDate | date }}</p>
+      <strong>Dispositivos solicitados:</strong>
+
+      <ion-list>
+        <ion-item *ngFor="let device of loanRequest.loanRequestDevices">
+          <ion-avatar slot="start">
+            <ion-img src="https://directorioias.com/wp-content/uploads/2023/03/mascotaDirectorioIA-300x300.jpg"></ion-img>
+          </ion-avatar>
+          <ion-label>
+            <h2>{{ device.description }}</h2>
+            <p>Cantidad: {{ device.quantity }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+      
+      <!-- Botones de Aprobar y Rechazar, solo si el estado es PENDING -->
+      <div *ngIf="loanRequest.status === 'PENDING'" class="button-group">
+        <ion-button expand="full" color="success" (click)="approveRequest()">Aprobar Solicitud</ion-button>
+        <ion-button expand="full" color="danger" (click)="rejectRequest()">Rechazar Solicitud</ion-button>
+      </div>
+      <div *ngIf="loanRequest.status === 'PENDING_RETURN'" class="button-group">
+        <ion-button expand="full" color="success" (click)="approveReturnRequest()">Aprobar Devolución</ion-button>
+        <ion-button expand="full" color="danger" (click)="rejectRequest()">Rechazar Devolución</ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

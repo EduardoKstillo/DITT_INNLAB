@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Detalles del Dispositivo</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="navigateToUpdate()">
+        <ion-icon name="create"></ion-icon>
+      </ion-button>
+      <ion-button color="danger" (click)="deleteDevice()">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ device?.description }}</ion-card-title>
+      <ion-card-subtitle>{{ device?.type }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Características:</strong> {{ device?.characteristics }}</p>
+      <p><strong>Serie:</strong> {{ device?.series }}</p>
+      <p><strong>Cantidad:</strong> {{ device?.quantity }}</p>
+      <p><strong>Adicional:</strong> {{ device?.additional }}</p>
+      <p><strong>Color:</strong> {{ device?.color }}</p>
+      <p><strong>Estado:</strong> {{ device?.status }}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,17 @@
+.device-counter {
+  display: flex;
+  align-items: center;
+  .button-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    button {
+      padding: 5px 10px;
+      font-size: 16px;
+    }
+    .counter-value {
+      width: 40px;
+      text-align: center;
+    }
+  }
+}

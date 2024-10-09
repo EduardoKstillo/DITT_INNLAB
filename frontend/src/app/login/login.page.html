@@ -1,0 +1,64 @@
+<ion-content class="ion-padding">
+  <div class="login-container">
+  
+    <!-- Header con ícono, línea, título y subtítulo -->
+    <div class="header-container">
+      <ion-icon class="header-icon" name="git-merge-outline"></ion-icon>
+      <div class="header-line"></div> <!-- Línea horizontal -->
+      <h1 class="header-title">
+        Crear una cuenta
+        <span class="sparkle">
+          <ion-icon name="rocket-sharp"></ion-icon>
+        </span>
+      </h1>
+      <p class="header-subtitle">
+        ¡Bienvenido! Por favor, introduzca sus datos.
+      </p>
+    </div>
+    
+    <form #loginForm="ngForm" (ngSubmit)="login()" novalidate>
+
+      <div class="div-email">
+        <ion-input label="Email" label-placement="floating" fill="outline" placeholder="email@domain.com" [clearInput]="true" [(ngModel)]="credentials.email" name="email" required email>
+          <ion-icon slot="start" name="mail-outline" class="input-icon"></ion-icon>
+        </ion-input>
+        <div *ngIf="loginForm.submitted || loginForm.form.get('email')?.touched">
+          <div *ngIf="loginForm.form.get('email')?.errors?.['required']" class="error-message">
+            El email es obligatorio.
+          </div>
+          <div *ngIf="loginForm.form.get('email')?.errors?.['email']" class="error-message">
+            Ingresa un email válido.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Contraseña -->
+      <div class="div-password">
+        <ion-input label="Contraseña" label-placement="floating" fill="outline" [type]="passwordType" placeholder="Contraseña" class="password"
+          [(ngModel)]="credentials.password" name="password" required minlength="6">
+          <ion-icon slot="start" name="lock-closed-outline" class="input-icon"></ion-icon>
+          <ion-button class="icon-eye" fill="clear" slot="end" aria-label="Show/hide" (click)="togglePasswordVisibility()">
+            <ion-icon slot="icon-only" [name]="passwordIcon" aria-hidden="true"></ion-icon>
+          </ion-button>
+        </ion-input>
+        <div *ngIf="loginForm.submitted || loginForm.form.get('password')?.touched">
+          <div *ngIf="loginForm.form.get('password')?.errors?.['required']" class="error-message">
+            La contraseña es obligatoria.
+          </div>
+          <div *ngIf="loginForm.form.get('password')?.errors?.['minlength']" class="error-message">
+            La contraseña debe tener al menos 6 caracteres.
+          </div>
+        </div>
+      </div>
+
+      <!-- Login Button -->
+      <ion-button expand="full" type="submit" class="login-btn" [disabled]="!loginForm.valid">Log In</ion-button>
+
+      <!-- Footer -->
+      <div class="footer-text">
+        <p>Don't have an account? <ion-router-link routerLink="/signup">Sign up</ion-router-link></p>
+      </div>
+    </form>
+  </div>
+</ion-content>

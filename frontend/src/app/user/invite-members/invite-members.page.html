@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Invitar Miembros</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="search-container">
+    <ion-searchbar 
+      [(ngModel)]="emailInput" 
+      (ionInput)="searchUsers()" 
+      placeholder="Buscar por email"
+      class="custom-searchbar"
+      clearInput>
+    </ion-searchbar>
+
+    <!-- Resultados de búsqueda -->
+    <ion-list *ngIf="searchResults.length > 0">
+      <ion-item *ngFor="let user of searchResults" (click)="addEmail(user.email)">
+        <ion-label>{{ user.email }}</ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ion-list>
+      <ion-item *ngFor="let email of emails">
+        <ion-label>{{ email }}</ion-label>
+        <ion-button slot="end" color="danger" (click)="removeEmail(email)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+    <ion-button class="send-btn" expand="full" (click)="sendInvitations()" [disabled]="emails.length === 0">Enviar Invitaciones</ion-button>
+  </div>
+</ion-content>

@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Usuarios</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <div>
+    <ion-item *ngFor="let user of users">
+      <ion-label>
+        <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+        <p> {{ user.email }} </p>
+        <p> {{ user.university }} </p>
+        <p> {{ user.dni }} </p>
+      </ion-label>
+      <ion-button slot="end" color="danger" (click)="deleteUser(user.id); $event.stopPropagation();">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
+      <ion-button slot="end" color="warning" (click)="editUser(user.id); $event.stopPropagation();">
+        <ion-icon name="pencil"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </div>
+
+  <!-- Botón para crear un nuevo proyecto -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="navigateToCreate()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

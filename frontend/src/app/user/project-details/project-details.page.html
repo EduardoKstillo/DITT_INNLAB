@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>Detalles del Proyecto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+    <ion-card class="project-details" *ngIf="project">
+        <ion-card-header>
+          <ion-card-title>{{ project.name }}</ion-card-title>
+          <ion-card-subtitle>{{ project.description }}</ion-card-subtitle>
+        </ion-card-header>
+      
+        <ion-card-content>
+            <p><strong>Lider: {{ project.leaderName }}</strong></p>
+            <p><strong>Miembros del Proyecto:</strong></p>
+            <ion-list>
+                <ion-item *ngFor="let member of project.members">
+                    <ion-avatar slot="start">
+                      <ion-img [src]="'https://i.pravatar.cc/300?u=' + member.email"></ion-img>
+                    </ion-avatar>
+                    <ion-label>
+                      <h2>{{ member.firstName }} {{ member.lastName }}</h2>
+                      <p>{{ member.email }}</p>
+                    </ion-label>
+                </ion-item>
+            </ion-list>
+        </ion-card-content>
+    </ion-card>      
+
+    <!-- Aquí colocamos el ion-fab, visible solo si el líder es el usuario logueado -->
+    <ion-fab 
+      slot="fixed" 
+      vertical="bottom" 
+      horizontal="end" 
+      *ngIf="project?.leaderName === loggedInUserName">
+      <ion-fab-button>
+        <ion-icon name="chevron-up-circle"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-list side="top">
+        <ion-fab-button (click)="goToLoanRequestPage()">
+          <ion-icon name="document"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button (click)="openInviteModal()">
+          <ion-icon name="color-palette"></ion-icon>
+        </ion-fab-button>
+      </ion-fab-list>
+    </ion-fab>
+
+    <!-- Bloque para mostrar las solicitudes de préstamo -->
+    <ion-card class="list-loan-request" *ngIf="loanRequests.length > 0">
+      <ion-card-header>
+        <ion-card-title>Solicitudes de Préstamo</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <div *ngFor="let loanRequest of loanRequests">
+            <ion-label>
+              <h2>Préstamo ID: {{ loanRequest.id }}</h2>
+              <p>Propósito: {{ loanRequest.purpose }}</p>
+              <p>Fecha de Solicitud: {{ loanRequest.startDate | date:'dd/MM/yyyy HH:mm:ss' }}</p>
+              <p>Estatus: {{ loanRequest.status }}</p>
+              <p>Dispositivos:</p>
+              <ul>
+                <li *ngFor="let device of loanRequest.loanRequestDevices">
+                  {{ device.quantity }} x {{ device.description }}
+                </li>
+              </ul>
+              <!-- Botón que solo aparece si el estado es 'APPROVED' -->       
+              <ion-button class="btn-returning-devices" fill="outline" color="danger" *ngIf="loanRequest.status === 'APPROVED'" (click)="returnDevice(loanRequest.id, $event)">
+                Devolver
+              </ion-button>
+              <hr>
+            </ion-label>
+          </div>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+</ion-content>

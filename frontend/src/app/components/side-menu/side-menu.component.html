@@ -1,0 +1,56 @@
+<ion-menu contentId="main-content" class="side-menu" menuId="first" type="overlay">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title slot="start">
+        <ion-icon class="header-icon" name="git-merge-outline"></ion-icon>
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <div class="profile-info">
+      <img src="../../../assets/images/profiledefault.avif" alt="Profile Picture" class="profile-picture" />
+      <h2 class="profile-name">{{ user.firstName }} {{ user.lastName }}</h2>
+      <p class="profile-email">{{ user.email }}</p>
+    </div>
+
+    <div class="menu-options">
+      <div class="menu-item" routerLink="/profile" routerDirection="root" (click)="closeMenu()">
+        <ion-icon name="accessibility-outline" slot="start"></ion-icon>
+        Perfil
+      </div>
+      <div class="menu-item" routerLink="/user-list" routerDirection="root" (click)="closeMenu()">
+        <ion-icon name="people-outline" slot="start"></ion-icon>
+        Usuarios
+      </div>
+      <div class="menu-item" routerLink="/all-projects" routerDirection="root" (click)="closeMenu()">
+        <ion-icon name="briefcase-outline" slot="start"></ion-icon>
+        Proyectos
+      </div>
+      <div class="menu-item" routerLink="/my-projects" routerDirection="root" (click)="closeMenu()">
+        <ion-icon name="folder-outline" slot="start"></ion-icon>
+        Mis Proyectos
+      </div>
+      <div class="menu-item" routerLink="/device-list" routerDirection="root" (click)="closeMenu()">
+        <ion-icon name="laptop-outline" slot="start"></ion-icon>
+        Dispositivos
+      </div>
+      <div class="menu-item" routerLink="/moderator-loan-requests" routerDirection="root" (click)="closeMenu()">
+        <ion-icon name="document-outline" slot="start"></ion-icon>
+        Solicitudes
+      </div>
+      <div class="menu-item" routerLink="/notifications" routerDirection="root" (click)="closeMenu()">
+        <ion-icon name="notifications-outline" slot="start"></ion-icon>
+        Notificaciones
+      </div>
+    </div>
+
+    <div class="logout-container">
+      <ion-button expand="full" color="danger" class="logout-button" (click)="logout()">
+        <ion-icon name="log-out" slot="start"></ion-icon>
+        Cerrar Sesión
+      </ion-button>
+    </div>
+    
+  </ion-content>
+</ion-menu>

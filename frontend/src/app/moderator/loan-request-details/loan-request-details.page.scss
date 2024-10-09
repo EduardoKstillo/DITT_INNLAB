@@ -1,0 +1,25 @@
+ion-header {
+  background: #3a3a3a; // Color de fondo del encabezado
+}
+
+ion-toolbar {
+  --background: #121212;
+}
+
+ion-card-subtitle {
+  color: #a1a1a1;
+}
+
+ion-card-content {
+  font-weight: bold;
+  color: #a1a1a1;
+}
+
+.loanrequest-details {
+  border-radius: 10px; /* Redondeo en los campos de entrada */
+  box-shadow: 0 1px 6px rgba(146, 146, 146, 0.363); /* Sombra en los campos */
+}
+
+ion-button {
+  margin-top: 10px;
+}
