@@ -29,80 +29,80 @@ const routes: Routes = [
   {
     path: 'my-projects',
     loadChildren: () => import('./user/my-projects/my-projects.module').then( m => m.MyProjectsPageModule),
-    // canActivate: [RoleGuard],
-    // data: { expectedRoles: ['ROLE_USER', 'ROLE_MODERATOR'] }
+    canActivate: [RoleGuard],
+    data: { expectedRoles: ['ROLE_USER'] }
   },
   {
     path: 'create-project',
     loadChildren: () => import('./user/create-project/create-project.module').then( m => m.CreateProjectPageModule),
-    // canActivate: [RoleGuard],
-    // data: { expectedRoles: ['ROLE_USER'] }
+    canActivate: [RoleGuard],
+    data: { expectedRoles: ['ROLE_USER'] }
   },
   {
     path: 'project-details/:id',
     loadChildren: () => import('./user/project-details/project-details.module').then( m => m.ProjectDetailsPageModule),
-    // canActivate: [RoleGuard],
-    // data: { expectedRoles: ['ROLE_USER', 'ROLE_MODERATOR', 'ROLE_ADMIN'] }
+    canActivate: [RoleGuard],
+    data: { expectedRoles: ['ROLE_USER', 'ROLE_MODERATOR', 'ROLE_ADMIN'] }
   },
   {
     path: 'invite-members',
     loadChildren: () => import('./user/invite-members/invite-members.module').then( m => m.InviteMembersPageModule),
-    // canActivate: [RoleGuard],
-    // data: { expectedRoles: ['ROLE_USER'] }
+    canActivate: [RoleGuard],
+    data: { expectedRoles: ['ROLE_USER'] }
   },
   {
     path: 'all-projects',
     loadChildren: () => import('./moderator/all-projects/all-projects.module').then( m => m.AllProjectsPageModule),
-    // canActivate: [RoleGuard],
-    // data: { expectedRoles: ['ROLE_MODERATOR', 'ROLE_ADMIN'] },
+    canActivate: [RoleGuard],
+    data: { expectedRoles: ['ROLE_MODERATOR', 'ROLE_ADMIN'] },
   },
   {
     path: 'request-loan/:projectId', // create a new request
     loadChildren: () => import('./request-loan/request-loan.module').then( m => m.RequestLoanPageModule),
-    // canActivate: [RoleGuard],
-    // data: { expectedRoles: ['ROLE_USER'] }
+    canActivate: [RoleGuard],
+    data: { expectedRoles: ['ROLE_USER'] }
   },
   {
     path: 'moderator-loan-requests',
     loadChildren: () => import('./moderator/moderator-loan-requests/moderator-loan-requests.module').then( m => m.ModeratorLoanRequestsPageModule),
-    // canActivate: [RoleGuard],
-    // data: { expectedRoles: ['ROLE_MODERATOR', 'ROLE_ADMIN'] }
+    canActivate: [RoleGuard],
+    data: { expectedRoles: ['ROLE_MODERATOR', 'ROLE_ADMIN'] }
   },
   {
     path: 'loan-request-details/:id',
     loadChildren: () => import('./moderator/loan-request-details/loan-request-details.module').then( m => m.LoanRequestDetailsPageModule),
-    // canActivate: [RoleGuard],
-    // data: { expectedRoles: ['ROLE_MODERATOR', 'ROLE_ADMIN'] }
+    canActivate: [RoleGuard],
+    data: { expectedRoles: ['ROLE_MODERATOR', 'ROLE_ADMIN'] }
   },
   {
     path: 'device-list',
     loadChildren: () => import('./admin/device-list/device-list.module').then( m => m.DeviceListPageModule),
-    // canActivate: [RoleGuard],
-    // data: { expectedRoles: ['ROLE_MODERATOR', 'ROLE_ADMIN'] }
+    canActivate: [RoleGuard],
+    data: { expectedRoles: ['ROLE_MODERATOR', 'ROLE_ADMIN'] }
   },
   {
     path: 'device-create',
     loadChildren: () => import('./admin/device-create/device-create.module').then( m => m.DeviceCreatePageModule),
-    // canActivate: [RoleGuard],
-    // data: { expectedRoles: ['ROLE_MODERATOR', 'ROLE_ADMIN'] }
+    canActivate: [RoleGuard],
+    data: { expectedRoles: ['ROLE_MODERATOR', 'ROLE_ADMIN'] }
   },
   {
     path: 'device-detail/:id',
     loadChildren: () => import('./admin/device-detail/device-detail.module').then( m => m.DeviceDetailPageModule),
-    // canActivate: [RoleGuard],
-    // data: { expectedRoles: ['ROLE_MODERATOR', 'ROLE_ADMIN'] }
+    canActivate: [RoleGuard],
+    data: { expectedRoles: ['ROLE_MODERATOR', 'ROLE_ADMIN'] }
   },
   {
     path: 'device-update/:id',
     loadChildren: () => import('./admin/device-update/device-update.module').then( m => m.DeviceUpdatePageModule),
     canActivate: [RoleGuard],
-    // data: { expectedRoles: ['ROLE_MODERATOR', 'ROLE_ADMIN'] }
+    data: { expectedRoles: ['ROLE_MODERATOR', 'ROLE_ADMIN'] }
   },
   {
     path: 'profile',
     loadChildren: () => import('./user/profile/profile.module').then( m => m.ProfilePageModule),
-    // canActivate: [RoleGuard],
-    // data: { expectedRoles: ['ROLE_USER', 'ROLE_MODERATOR', 'ROLE_ADMIN'] }
+    canActivate: [RoleGuard],
+    data: { expectedRoles: ['ROLE_USER', 'ROLE_MODERATOR', 'ROLE_ADMIN'] }
   },
   {
     path: 'unauthorized',
@@ -110,23 +110,33 @@ const routes: Routes = [
   },
   {
     path: 'request-loan',
-    loadChildren: () => import('./request-loan/request-loan.module').then( m => m.RequestLoanPageModule)
+    loadChildren: () => import('./request-loan/request-loan.module').then( m => m.RequestLoanPageModule),
+    canActivate: [RoleGuard],
+    data: { expectedRoles: ['ROLE_USER'] }
   },
   {
     path: 'user-list',
-    loadChildren: () => import('./admin/user-list/user-list.module').then( m => m.UserListPageModule)
+    loadChildren: () => import('./admin/user-list/user-list.module').then( m => m.UserListPageModule),
+    canActivate: [RoleGuard],
+    data: { expectedRoles: ['ROLE_ADMIN'] }
   },
   {
     path: 'create-user',
-    loadChildren: () => import('./admin/create-user/create-user.module').then( m => m.CreateUserPageModule)
+    loadChildren: () => import('./admin/create-user/create-user.module').then( m => m.CreateUserPageModule),
+    canActivate: [RoleGuard],
+    data: { expectedRoles: ['ROLE_ADMIN'] }
   },
   {
     path: 'edit-user/:id',
-    loadChildren: () => import('./admin/edit-user/edit-user.module').then( m => m.EditUserPageModule)
+    loadChildren: () => import('./admin/edit-user/edit-user.module').then( m => m.EditUserPageModule),
+    canActivate: [RoleGuard],
+    data: { expectedRoles: ['ROLE_USER', 'ROLE_MODERATOR', 'ROLE_ADMIN'] }
   },
   {
     path: 'notifications',
-    loadChildren: () => import('./notifications/notifications.module').then( m => m.NotificationsPageModule)
+    loadChildren: () => import('./notifications/notifications.module').then( m => m.NotificationsPageModule),
+    canActivate: [RoleGuard],
+    data: { expectedRoles: ['ROLE_USER'] }
   }
 ];
 

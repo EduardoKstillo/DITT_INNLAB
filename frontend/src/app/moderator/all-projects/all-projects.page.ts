@@ -19,6 +19,15 @@ export class AllProjectsPage implements OnInit {
 
   ngOnInit() {
     this.loadAllProjects();
+
+    // Escuchar cuando se cree un nuevo proyecto
+    this.projectService.projectCreated$.subscribe((created) => {
+      if (created) {
+        console.log("recargaaaaaa")
+        this.loadAllProjects();
+      }
+    });
+
   }
 
   loadAllProjects() {

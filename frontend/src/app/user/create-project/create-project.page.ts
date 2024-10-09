@@ -40,6 +40,7 @@ export class CreateProjectPage {
           buttons: ['OK'],
         });
         await alert.present();
+        this.projectService.notifyProjectCreated();
         this.router.navigate(['/my-projects']); // Regresar a la lista de proyectos
       },
       async (error) => {

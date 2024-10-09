@@ -124,4 +124,17 @@ export class AuthService {
       })
     };
   }
+
+  // Obtener los roles del usuario autenticado
+  getLoggedInUserRoles(): string[] | null {
+    const user = this.getUser();
+    return user ? user.roles : null;  // Retorna los roles del usuario autenticado si existen
+  }
+
+  // Verificar si el usuario tiene un rol específico
+  hasRole(role: string): boolean {
+    const roles = this.getLoggedInUserRoles();
+    return roles ? roles.includes(role) : false;  // Verifica si el rol existe
+  }
+
 }

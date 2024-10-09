@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class SideMenuComponent {
   user: any = {};
+  roles: string[] | null = null;
 
   constructor(
     private authService: AuthService,
@@ -21,6 +22,7 @@ export class SideMenuComponent {
   ) {}
 
   ngOnInit() {
+    this.roles = this.authService.getLoggedInUserRoles();
     this.loadUserProfile();
   }
 
@@ -68,5 +70,17 @@ export class SideMenuComponent {
     });
 
     await alert.present();
+  }
+
+  hasAdminRole(): boolean {
+    return this.authService.hasRole('ROLE_ADMIN'); 
+  }
+
+  hasUserRole(): boolean {
+    return this.authService.hasRole('ROLE_USER'); 
+  }
+
+  hasModRole(): boolean {
+    return this.authService.hasRole('ROLE_MODERATOR'); 
   }
 }

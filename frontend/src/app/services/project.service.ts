@@ -2,12 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
   
+  private projectCreatedSource = new BehaviorSubject<boolean>(false);
+  projectCreated$ = this.projectCreatedSource.asObservable();
+
   private baseUrl = `${environment.apiUrl}/projects`;
 
   constructor(private http: HttpClient) {}
@@ -72,5 +76,14 @@ export class ProjectService {
   getLoanRequests(projectId: number): Observable<any> {
     const headers = this.getAuthHeaders();
     return this.http.get(`${this.baseUrl}/${projectId}/loan-requests`, { headers });
+  }
+
+  // Método para notificar que un proyecto fue creado
+  notifyProjectCreated() {
+    this.projectCreatedSource.next(true);
+    // Restablecer a false después de un breve tiempo o después de que se haya procesado la carga de proyectos
+    setTimeout(() => {
+      this.projectCreatedSource.next(false); // Restablecer el valor
+    }, 100); // Ajusta el tiempo según sea necesario
   }
 }

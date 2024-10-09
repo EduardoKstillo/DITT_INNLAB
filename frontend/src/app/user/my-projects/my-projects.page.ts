@@ -24,6 +24,12 @@ export class MyProjectsPage implements OnInit {
 
   ngOnInit() {
     this.loadUserProjects();
+    this.projectService.projectCreated$.subscribe((created) => {
+      if (created) {
+        console.log("recargaaaaaa")
+        this.loadUserProjects();
+      }
+    });
   }
 
   loadUserProjects() {
