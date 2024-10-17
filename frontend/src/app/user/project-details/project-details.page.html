@@ -61,7 +61,6 @@
           <div *ngFor="let loanRequest of loanRequests">
             <ion-label>
               <h2>Préstamo ID: {{ loanRequest.id }}</h2>
-              <p>Propósito: {{ loanRequest.purpose }}</p>
               <p>Fecha de Solicitud: {{ loanRequest.startDate | date:'dd/MM/yyyy HH:mm:ss' }}</p>
               <p>Estatus: {{ loanRequest.status }}</p>
               <p>Dispositivos:</p>

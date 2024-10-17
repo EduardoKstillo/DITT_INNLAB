@@ -20,6 +20,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.management.Notification;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.HashSet;
@@ -59,6 +60,8 @@ public class LoanRequestService {
     }
 
     public LoanRequestDTO createLoanRequest(LoanRequest2DTO loanRequestDTO) {
+        // Validar que el horario esté disponible
+        validateTimeSlotAvailability(loanRequestDTO.getReservationDate(), loanRequestDTO.getTimeSlot());
 
         // Buscar el proyecto asociado
         Project project = projectRepository.findById(loanRequestDTO.getProjectId())
@@ -67,19 +70,32 @@ public class LoanRequestService {
         // Crear la solicitud de préstamo
         LoanRequest loanRequest = new LoanRequest();
         loanRequest.setProject(project);
-        loanRequest.setStartDate(loanRequestDTO.getStartDate());
         loanRequest.setStatus(LoanRequestStatus.PENDING);
-        loanRequest.setPurpose(loanRequestDTO.getPurpose());
+        loanRequest.setReservationDate(loanRequestDTO.getReservationDate());
+        loanRequest.setTimeSlot(loanRequestDTO.getTimeSlot());
 
+        // Procesar y asociar dispositivos
         Set<LoanRequestDevice> loanRequestDevices = processLoanRequestDevices(loanRequestDTO, loanRequest);
         loanRequest.setLoanRequestDevices(loanRequestDevices);
+
+        // Guardar la solicitud
         loanRequest = loanRequestRepository.save(loanRequest);
 
+        // Notificar a los moderadores
         notifyModerators(loanRequest, "Nueva Solicitud de Préstamo", "Se ha creado una nueva solicitud de préstamo.");
 
         return mapToDTO(loanRequest);
     }
 
+    // Validar si un horario está disponible para la reserva.
+    private void validateTimeSlotAvailability(LocalDate date, String timeSlot) {
+        boolean isAvailable = !loanRequestRepository.existsByReservationDateAndTimeSlot(date, timeSlot);
+        if (!isAvailable) {
+            throw new IllegalArgumentException("El horario seleccionado ya está reservado.");
+        }
+    }
+
+    // Procesar los dispositivos solicitados.
     private Set<LoanRequestDevice> processLoanRequestDevices(LoanRequest2DTO loanRequestDTO, LoanRequest loanRequest) {
         Set<LoanRequestDevice> loanRequestDevices = new HashSet<>();
 
@@ -99,6 +115,7 @@ public class LoanRequestService {
         return loanRequestDevices;
     }
 
+    // Validar la cantidad de dispositivos solicitados.
     private void validateDeviceQuantity(int requestedQuantity, int availableQuantity) {
         if (requestedQuantity > availableQuantity) {
             throw new IllegalArgumentException("Requested quantity exceeds available stock.");
@@ -291,9 +308,7 @@ public class LoanRequestService {
 
         // Mapear los campos básicos de LoanRequest
         loanRequestDTO.setId(loanRequest.getId());
-        loanRequestDTO.setStartDate(loanRequest.getStartDate());
         loanRequestDTO.setStatus(loanRequest.getStatus());
-        loanRequestDTO.setPurpose(loanRequest.getPurpose());
         loanRequestDTO.setApprovedBy(loanRequest.getApprovedBy());
         loanRequestDTO.setApprovedAt(loanRequest.getApprovedAt());
         loanRequestDTO.setRejectedBy(loanRequest.getRejectedBy());

@@ -5,6 +5,7 @@ import com.bezkoder.spring.security.postgresql.models.LoanRequestStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.Set;
@@ -14,10 +15,11 @@ public class LoanRequest2DTO {
     private Long id;
     private Long projectId;
 
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
-    private OffsetDateTime startDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate reservationDate; // Nueva fecha de reserva del laboratorio
+
+    private String timeSlot; // Nuevo campo para el horario solicitado
 
     private LoanRequestStatus status;
-    private String purpose;
     private Set<LoanRequestDeviceDTO> loanRequestDevices;
 }

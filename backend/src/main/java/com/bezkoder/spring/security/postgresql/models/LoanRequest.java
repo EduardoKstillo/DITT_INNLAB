@@ -1,5 +1,6 @@
 package com.bezkoder.spring.security.postgresql.models;
 
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.Optional;
 import java.util.Set;
@@ -30,15 +31,18 @@ public class LoanRequest {
     private Project project; // Proyecto que realiza la solicitud
 
     @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate reservationDate; // Fecha de uso del laboratorio
+
+    @NotBlank
+    private String timeSlot; // Horario solicitado (ej. "8am-9am")
+
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
-    private OffsetDateTime startDate;
+    private OffsetDateTime createdAt = OffsetDateTime.now(); // Fecha de creación de la solicitud
 
     @Enumerated(EnumType.STRING)
     @NotNull
     private LoanRequestStatus status; // PENDING, APPROVED, REJECTED
-
-    @NotBlank
-    private String purpose;
 
     @OneToMany(mappedBy = "loanRequest", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore

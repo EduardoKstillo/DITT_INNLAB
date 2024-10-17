@@ -5,6 +5,7 @@ import com.bezkoder.spring.security.postgresql.models.LoanRequest;
 import com.bezkoder.spring.security.postgresql.models.LoanRequestStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,4 +16,6 @@ public interface LoanRequestRepository extends JpaRepository<LoanRequest, Long> 
     Optional<LoanRequest> findByIdAndStatus(Long id, LoanRequestStatus status);
     List<LoanRequest> findByStatus(String status);
 
+    // Verificar si existe una solicitud en una fecha y horario específicos
+    boolean existsByReservationDateAndTimeSlot(LocalDate date, String timeSlot);
 }
