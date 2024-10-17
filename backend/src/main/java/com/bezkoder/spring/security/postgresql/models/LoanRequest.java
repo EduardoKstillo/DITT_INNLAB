@@ -14,6 +14,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 @EqualsAndHashCode
@@ -31,11 +32,10 @@ public class LoanRequest {
     private Project project; // Proyecto que realiza la solicitud
 
     @NotNull
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate reservationDate; // Fecha de uso del laboratorio
+    private LocalDate reservationDate;
 
     @NotBlank
-    private String timeSlot; // Horario solicitado (ej. "8am-9am")
+    private String timeSlot;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     private OffsetDateTime createdAt = OffsetDateTime.now(); // Fecha de creación de la solicitud

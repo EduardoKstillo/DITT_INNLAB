@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-
+  
   <ion-searchbar 
   [(ngModel)]="searchQuery" 
   (ionInput)="onSearchInput($event)" 
@@ -17,7 +17,6 @@
 
   <ion-list>
     <ion-item *ngFor="let device of filteredDevices">
-
 
       <ion-grid>
         <ion-row>
@@ -63,8 +62,33 @@
       </ion-header>
 
       <ion-content>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-datetime-button datetime="datetime"></ion-datetime-button>
+              <!-- Modal que contiene el calendario -->
+              <ion-modal [keepContentsMounted]="true">
+                <ng-template>
+                  <ion-datetime id="datetime" presentation="date" (ionChange)="onDateTimeChange($event)"></ion-datetime>
+                </ng-template>
+              </ion-modal>
+            </ion-col>
+            <ion-col>
+                <ion-select [(ngModel)]="selectedTimeSlot" placeholder="Horario" class="center-select">
+                  <ion-select-option value="8am-9am">8am-9am</ion-select-option>
+                  <ion-select-option value="10am-11am">10am-11am</ion-select-option>
+                  <ion-select-option value="12pm-1pm">12pm-1pm</ion-select-option>
+                  <ion-select-option value="1pm-2pm">1pm-2pm</ion-select-option>
+                  <ion-select-option value="2pm-3pm">2pm-3pm</ion-select-option>
+                  <ion-select-option value="2pm-3pm">3pm-4pm</ion-select-option>
+                </ion-select>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
         
         <ion-list>
+          
           <ion-item *ngFor="let device of cart">
             <ion-grid>
               <ion-row>
@@ -97,10 +121,6 @@
           </ion-item>
         </ion-list>
 
-        <ion-item>
-          <ion-label position="floating">Propósito del préstamo</ion-label>
-          <ion-input [(ngModel)]="loanPurpose" placeholder="Describe el propósito"></ion-input>
-        </ion-item>
       </ion-content>
 
       <ion-footer>

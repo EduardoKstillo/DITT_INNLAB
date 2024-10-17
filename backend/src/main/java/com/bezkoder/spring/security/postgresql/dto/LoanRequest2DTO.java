@@ -15,11 +15,8 @@ public class LoanRequest2DTO {
     private Long id;
     private Long projectId;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate reservationDate; // Nueva fecha de reserva del laboratorio
+    private LocalDate reservationDate;
+    private String timeSlot;
 
-    private String timeSlot; // Nuevo campo para el horario solicitado
-
-    private LoanRequestStatus status;
     private Set<LoanRequestDeviceDTO> loanRequestDevices;
 }

@@ -29,9 +29,11 @@ export class RequestLoanPage {
   cart: Device[] = []; // Dispositivos agregados al carrito
   isModalOpen = false;
 
-  loanPurpose: string = '';
   filteredDevices: any[] = [];
   searchQuery: string = '';
+
+  selectedDate: string = '';  // Variable para almacenar la fecha seleccionada
+  selectedTimeSlot: string = '';  // Variable para almacenar el horario seleccionad
 
   constructor(
     private loanRequestService: LoanRequestService,
@@ -117,6 +119,20 @@ export class RequestLoanPage {
     device.selectedQuantity = newQuantity;
   }
 
+  // Función para manejar la selección de fecha
+  onDateTimeChange(event: any) {
+    const selectedDate = event.detail.value;
+    console.log('Fecha seleccionada:', selectedDate);
+    this.selectedDate = selectedDate;
+  }
+
+  // Función para manejar la selección de hora
+  onTimeSlotChange(event: any) {
+    const selectedTimeSlot = event.detail.value;
+    console.log('Hora seleccionada:', selectedTimeSlot);
+    this.selectedTimeSlot = selectedTimeSlot;
+  }
+
   /// Abre el modal
   openModal() {
     this.isModalOpen = true;
@@ -144,22 +160,21 @@ export class RequestLoanPage {
       return;
     }
 
-    if (!this.loanPurpose || this.loanPurpose.trim() === '') {
+    if (!this.selectedDate && !this.selectedTimeSlot) {
       const alert = await this.alertController.create({
         header: 'Error',
-        message: 'Por favor, proporciona un propósito para el préstamo.',
+        message: 'Por favor, selecciona una fecha y hora para la solicitud.',
         buttons: ['OK'],
       });
       await alert.present();
       return;
     }
 
-    // Construir el payload de la solicitud
+    // Payload de la solicitud
     const requestPayload = {
-      projectId: this.projectId, // Asegúrate de tener el projectId
-      startDate: new Date().toISOString(), // Ajustar la fecha según sea necesario
-      status: 'PENDING', // Estado inicial de la solicitud
-      purpose: this.loanPurpose, // Valor dinámico del propósito ingresado
+      projectId: this.projectId,
+      reservationDate: this.selectedDate,
+      timeSlot: this.selectedTimeSlot,
       loanRequestDevices: this.cart.map((device) => ({
         deviceId: device.id,
         quantity: device.selectedQuantity,

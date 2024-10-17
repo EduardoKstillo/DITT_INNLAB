@@ -60,18 +60,22 @@ public class LoanRequestService {
     }
 
     public LoanRequestDTO createLoanRequest(LoanRequest2DTO loanRequestDTO) {
-        // Validar que el horario esté disponible
-        validateTimeSlotAvailability(loanRequestDTO.getReservationDate(), loanRequestDTO.getTimeSlot());
 
         // Buscar el proyecto asociado
         Project project = projectRepository.findById(loanRequestDTO.getProjectId())
                 .orElseThrow(() -> new ResourceNotFoundException("Project not found"));
 
+        // Validar si ya existe una solicitud con la misma fecha, horario y estado "APPROVED"
+        if (loanRequestRepository.existsByReservationDateAndTimeSlotAndStatus(
+                loanRequestDTO.getReservationDate(), loanRequestDTO.getTimeSlot(), LoanRequestStatus.APPROVED)) {
+            throw new IllegalArgumentException("Ya existe una solicitud aprobada para esta fecha y horario.");
+        }
+
         // Crear la solicitud de préstamo
         LoanRequest loanRequest = new LoanRequest();
         loanRequest.setProject(project);
         loanRequest.setStatus(LoanRequestStatus.PENDING);
-        loanRequest.setReservationDate(loanRequestDTO.getReservationDate());
+        loanRequest.setReservationDate(loanRequestDTO.getReservationDate());  // Solo la fecha
         loanRequest.setTimeSlot(loanRequestDTO.getTimeSlot());
 
         // Procesar y asociar dispositivos
@@ -85,14 +89,6 @@ public class LoanRequestService {
         notifyModerators(loanRequest, "Nueva Solicitud de Préstamo", "Se ha creado una nueva solicitud de préstamo.");
 
         return mapToDTO(loanRequest);
-    }
-
-    // Validar si un horario está disponible para la reserva.
-    private void validateTimeSlotAvailability(LocalDate date, String timeSlot) {
-        boolean isAvailable = !loanRequestRepository.existsByReservationDateAndTimeSlot(date, timeSlot);
-        if (!isAvailable) {
-            throw new IllegalArgumentException("El horario seleccionado ya está reservado.");
-        }
     }
 
     // Procesar los dispositivos solicitados.
@@ -169,7 +165,7 @@ public class LoanRequestService {
     }
 
     public List<LoanRequestDTO> getAllLoanRequests() {
-        return loanRequestRepository.findAll(Sort.by(Sort.Direction.DESC, "startDate"))
+        return loanRequestRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"))
                 .stream()
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
@@ -308,7 +304,10 @@ public class LoanRequestService {
 
         // Mapear los campos básicos de LoanRequest
         loanRequestDTO.setId(loanRequest.getId());
+        loanRequestDTO.setCreatedAt(loanRequest.getCreatedAt());
         loanRequestDTO.setStatus(loanRequest.getStatus());
+        loanRequestDTO.setReservationDate(loanRequest.getReservationDate());
+        loanRequestDTO.setTimeSlot(loanRequest.getTimeSlot());
         loanRequestDTO.setApprovedBy(loanRequest.getApprovedBy());
         loanRequestDTO.setApprovedAt(loanRequest.getApprovedAt());
         loanRequestDTO.setRejectedBy(loanRequest.getRejectedBy());

@@ -25,3 +25,9 @@ ion-modal ion-toolbar {
   --background: #121212;
   --color: white;
 }
+
+.center-select {
+  margin: 0 auto; /* Esto centra el elemento dentro de su contenedor */
+  display: block;
+  width: fit-content; /* Ajusta el ancho al contenido */
+}
