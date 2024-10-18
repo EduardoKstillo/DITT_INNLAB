@@ -7,28 +7,36 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <div>
-    <ion-item *ngFor="let device of devices" (click)="navigateToDetail(device.id)">
-      <ion-label>
-        <h2>{{ device.description }}</h2>
-        <p>Stock: {{ device.quantity }}</p>
-        <p>{{ device.status }}</p>
-      </ion-label>
-      <ion-button slot="end" color="danger" (click)="deleteDevice(device.id); $event.stopPropagation();">
-        <ion-icon name="trash"></ion-icon>
-      </ion-button>
-      <ion-button slot="end" color="warning" (click)="navigateToUpdate(device.id); $event.stopPropagation();">
-        <ion-icon name="pencil"></ion-icon>
-      </ion-button>
-    </ion-item>
-  </div>
+<ion-content class="ion-padding custom-content">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-md="6" offset-md="3">
+        <!-- Si no hay dispositivos -->
+        <ion-text *ngIf="devices.length === 0" color="medium" class="no-devices-text">
+          <p>No hay dispositivos creados actualmente.</p>
+        </ion-text>
 
-   <!-- Botón para crear un nuevo proyecto -->
-   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <!-- Listado de dispositivos -->
+        <ion-item *ngFor="let device of devices" (click)="navigateToDetail(device.id)">
+          <ion-label>
+            <h2>{{ device.description }}</h2>
+            <p>Stock: {{ device.quantity }}</p>
+            <p>{{ device.status }}</p>
+          </ion-label>
+          <ion-button slot="end" color="danger" (click)="deleteDevice(device.id); $event.stopPropagation();">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+          <ion-button slot="end" color="warning" (click)="navigateToUpdate(device.id); $event.stopPropagation();">
+            <ion-icon name="pencil"></ion-icon>
+          </ion-button>
+        </ion-item>        
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- Botón para crear un nuevo dispositivo -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="navigateToCreate()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-
 </ion-content>

@@ -11,3 +11,16 @@ ion-item {
   background-color: #1E1E1E;
   box-shadow: 0 1px 5px rgba(146, 146, 146, 0.363); /* Sombra en los campos */
 }
+
+.custom-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+}
+
+.no-devices-text {
+  font-size: 18px;
+  color: #ccc;
+}

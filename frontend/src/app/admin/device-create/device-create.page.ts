@@ -35,7 +35,12 @@ export class DeviceCreatePage {
           buttons: ['OK']
         });
         await alert.present();
-        this.router.navigate(['/device-list']); // Regresar a la lista de dispositivos
+
+        // Restablecer el formulario después de la creación exitosa
+        this.resetForm();
+
+        // Navegar de regreso a la lista de dispositivos
+        this.router.navigate(['/device-list']);
       },
       async (error) => {
         const alert = await this.alertController.create({
@@ -46,5 +51,19 @@ export class DeviceCreatePage {
         await alert.present();
       }
     );
+  }
+
+  // Función para resetear el formulario
+  resetForm() {
+    this.deviceData = {
+      type: '',
+      description: '',
+      characteristics: '',
+      series: '',
+      quantity: 0,
+      additional: '',
+      color: '',
+      status: 'DISPONIBLE' // Volver a los valores predeterminados
+    };
   }
 }
