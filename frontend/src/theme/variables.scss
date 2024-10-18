@@ -6,29 +6,50 @@
     font-style: normal;
   }
 
-  /* Aplica la fuente personalizada a toda la aplicación */
-  --ion-font-family: 'MyCustomFont', sans-serif; // Cambia la familia de fuentes de Ionic
+  /* Fuente personalizada */
+  --ion-font-family: 'MyCustomFont', sans-serif;
 
-  --ion-color-primary: #b10606; /* Color de fondo del encabezado */
-  --ion-color-primary-contrast: white; /* Color del texto en el encabezado */
-
-  /* General Dark Theme Colors */
-  // --ion-background-color: #1c1c1c; /* Color de fondo oscuro */
-  --ion-text-color: #f0f0f0;       /* Color de texto claro */
-  --ion-color-primary: #007aff;    /* Color principal (azul) */
+  /* Colores principales para el modo claro */
+  --ion-color-primary: #007aff;
   --ion-color-primary-contrast: #ffffff;
-  --ion-toolbar-background: #1c1c1c; /* Fondo oscuro para la barra de herramientas */
-  --ion-tab-bar-background: #1c1c1c; /* Fondo oscuro para la barra de pestañas */
-  --ion-tab-bar-color: #8e8e93;      /* Color de los iconos inactivos en la barra de pestañas */
-  --ion-tab-bar-color-selected: #007aff; /* Color de los iconos activos en la barra de pestañas */
-  
-  /* Customize Tabs */
-  --ion-tab-bar-height: 60px; /* Altura personalizada de la barra de pestañas */
+  --ion-color-danger: #e53e3e; /* Botón de eliminar en modo claro */
+  --ion-color-warning: #ffcc00; /* Botón de editar en modo claro */
+
+  /* Colores del modo claro */
+  --ion-background-color: #ffffff; /* Fondo claro */
+  --ion-text-color: #1c1c1c; /* Texto oscuro */
+  --ion-text-secondary: #666666; /* Texto secundario claro */
+  --ion-text-danger: #e53e3e; /* Texto de advertencia */
+  --ion-card-background: #f7f7f7; /* Fondo claro para las tarjetas */
+
+  /* Barra de herramientas y pestañas */
+  --ion-toolbar-background: #ffffff;
+  --ion-tab-bar-background: #ffffff;
+  --ion-tab-bar-color: #666666; /* Iconos inactivos en claro */
+  --ion-tab-bar-color-selected: #007aff; /* Iconos activos en claro */
+
+  /* Otros ajustes personalizados */
+  --ion-tab-bar-height: 60px;
   --ion-tab-button-background: transparent;
-  --ion-tab-button-color-aXXctive: #007aff; /* Color de icono activo */
-  --ion-tab-button-color: #8e8e93;        /* Color de icono inactivo */
-  
-  /* Customize Icon */
   --ion-icon-size-large: 28px;
   --ion-icon-size-small: 20px;
+}
+
+/* Modo oscuro */
+body.dark {
+  --ion-background-color: #0f0f0f; /* Fondo oscuro */
+  --ion-text-color: #f0f0f0; /* Texto claro */
+  --ion-text-secondary: #a1a1a1; /* Texto secundario oscuro */
+  --ion-text-danger: #ff4d4d; /* Texto de advertencia en oscuro */
+  --ion-card-background: #121212; /* Fondo de tarjetas en oscuro */
+
+  /* Colores de botones en modo oscuro */
+  --ion-color-danger: #ff4d4d; /* Botón de eliminar */
+  --ion-color-warning: #ffcc00; /* Botón de editar */
+
+  /* Barra de herramientas y pestañas */
+  --ion-toolbar-background: #0f0f0f;
+  --ion-tab-bar-background: #0f0f0f;
+  --ion-tab-bar-color: #8e8e93; /* Iconos inactivos en oscuro */
+  --ion-tab-bar-color-selected: #007aff; /* Iconos activos en oscuro */
 }

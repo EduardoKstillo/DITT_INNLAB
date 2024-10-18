@@ -1,18 +1,18 @@
 ion-header {
-  background: #121212; // Color de fondo del encabezado
+  background: var(--ion-background-color); // Color de fondo dinámico según el tema
 }
 
 ion-toolbar {
-  --background: #121212;
+  --background: var(--ion-background-color); // Fondo del toolbar dinámico
 }
 
 ion-item {
   margin-bottom: 10px;
-  background-color: #1E1E1E;
+  background-color: var(--ion-item-background); // Fondo dinámico del ítem
   box-shadow: 0 1px 5px rgba(146, 146, 146, 0.363); /* Sombra en los campos */
 }
 
-/* Estilo adicional para ajustar márgenes o padding según el tamaño de la pantalla */
+/* Ajuste de márgenes o padding según el tamaño de la pantalla */
 @media (max-width: 768px) {
   ion-item {
     margin-bottom: 10px;
@@ -30,5 +30,3 @@ ion-item {
     margin-bottom: 20px;
   }
 }
-
-

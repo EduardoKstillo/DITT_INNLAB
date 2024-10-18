@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class SideMenuComponent {
   user: any = {};
   roles: string[] | null = null;
+  isDarkMode: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -24,6 +25,7 @@ export class SideMenuComponent {
   ngOnInit() {
     this.roles = this.authService.getLoggedInUserRoles();
     this.loadUserProfile();
+    this.initializeTheme();
   }
 
   loadUserProfile() {
@@ -82,5 +84,22 @@ export class SideMenuComponent {
 
   hasModRole(): boolean {
     return this.authService.hasRole('ROLE_MODERATOR'); 
+  }
+
+  initializeTheme() {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const savedTheme = localStorage.getItem('dark-theme');
+    this.isDarkMode = savedTheme ? JSON.parse(savedTheme) : prefersDark;
+    this.toggleDarkTheme(this.isDarkMode);
+  }
+
+  toggleTheme(event: any) {
+    this.isDarkMode = event.detail.checked;
+    this.toggleDarkTheme(this.isDarkMode);
+    localStorage.setItem('dark-theme', JSON.stringify(this.isDarkMode));
+  }
+
+  toggleDarkTheme(shouldAdd: boolean) {
+    document.body.classList.toggle('dark', shouldAdd);
   }
 }

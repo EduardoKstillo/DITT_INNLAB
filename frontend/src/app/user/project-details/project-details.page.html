@@ -14,13 +14,13 @@
         <!-- Detalles del proyecto -->
         <ion-card class="project-details" *ngIf="project">
           <ion-card-header>
-            <ion-card-title>{{ project.name }}</ion-card-title>
+            <ion-card-title class="ion-text-center">{{ project.name }}</ion-card-title>
             <ion-card-subtitle>{{ project.description }}</ion-card-subtitle>
           </ion-card-header>
 
           <ion-card-content>
-            <p><strong>Lider: {{ project.leaderName }}</strong></p>
-            <p><strong>Miembros del Proyecto:</strong></p>
+            <p>Lider: {{ project.leaderName }}</p>
+            <p>Miembros del Proyecto:</p>
             <ion-list>
               <ion-item *ngFor="let member of project.members">
                 <ion-avatar slot="start">

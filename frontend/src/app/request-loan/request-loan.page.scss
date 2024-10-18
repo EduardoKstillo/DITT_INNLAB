@@ -31,3 +31,14 @@ ion-modal ion-toolbar {
   display: block;
   width: fit-content; /* Ajusta el ancho al contenido */
 }
+.custom-padding {
+  padding-left: 16px; /* Ajusta según lo necesites */
+  padding-right: 16px; /* Ajusta según lo necesites */
+}
+
+@media (min-width: 768px) {
+  .custom-padding {
+    padding-left: 32px; /* Espacio más amplio en pantallas grandes */
+    padding-right: 32px; /* Espacio más amplio en pantallas grandes */
+  }
+}

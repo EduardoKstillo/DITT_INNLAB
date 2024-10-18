@@ -45,6 +45,12 @@
       </div>
     </div>
 
+    <div class="menu-item">
+      <ion-icon name="moon-outline" slot="start"></ion-icon>
+      Tema Oscuro
+      <ion-toggle slot="end" (ionChange)="toggleTheme($event)" [checked]="isDarkMode"></ion-toggle>
+    </div>
+
     <div class="logout-container">
       <ion-button expand="full" color="danger" class="logout-button" (click)="logout()">
         <ion-icon name="log-out" slot="start"></ion-icon>
