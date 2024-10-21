@@ -34,3 +34,5 @@ build/
 
 # Ignorar la carpeta images
 src/main/resources/static/images/
+
+src/main/resources/firebase_key.json
