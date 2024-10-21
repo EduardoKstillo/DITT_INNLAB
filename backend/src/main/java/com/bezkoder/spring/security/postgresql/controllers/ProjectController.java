@@ -97,12 +97,10 @@ public class ProjectController {
     }
 
     @DeleteMapping("/{projectId}/members")
-    public ResponseEntity<?> removeMemberFromProject(@PathVariable Long projectId, @RequestBody Map<String, Long> body) {
-        Long userId = body.get("userId");
+    public ResponseEntity<?> removeMemberFromProject(@PathVariable Long projectId, @RequestParam Long userId) {
         projectService.removeMemberFromProject(projectId, userId);
         return ResponseEntity.ok(new MessageResponse("Miembro eliminado exitosamente"));
     }
-
     @GetMapping("/{projectId}/loan-requests")
     public ResponseEntity<List<LoanRequest>> getLoanRequestsByProject(@PathVariable Long projectId) {
         List<LoanRequest> loanRequests = projectService.getLoanRequestsByProject(projectId);

@@ -67,6 +67,11 @@ export class LoanRequestService {
     return this.http.patch<void>(`${this.baseUrl}/${loanRequestId}/approve-return?moderatorId=${moderatorId}`, {}, { headers });
   }
 
+  rejectedReturn(loanRequestId: number, moderatorId: number): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.patch<void>(`${this.baseUrl}/${loanRequestId}/reject-return?moderatorId=${moderatorId}`, {}, { headers });
+  }
+
   cancelLoanRequest(loanRequestId: number): Observable<any> {
     const headers = this.getAuthHeaders();
     return this.http.patch<string>(`${this.baseUrl}/${loanRequestId}/cancel`, {}, { headers });

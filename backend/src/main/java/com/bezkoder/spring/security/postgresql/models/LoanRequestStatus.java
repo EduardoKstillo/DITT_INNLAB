@@ -6,5 +6,6 @@ public enum LoanRequestStatus {
     REJECTED,      // Solicitud rechazada
     PENDING_RETURN, // Dispositivos en proceso de devolución
     RETURNED,      // Dispositivos devueltos y aprobados
+    RETURN_REJECTED, // Devolución rechazada
     CANCELED       // Solicitud cancelada
 }

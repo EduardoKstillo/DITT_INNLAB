@@ -65,9 +65,12 @@ public class LoanRequestService {
         Project project = projectRepository.findById(loanRequestDTO.getProjectId())
                 .orElseThrow(() -> new ResourceNotFoundException("Project not found"));
 
-        // Validar si ya existe una solicitud con la misma fecha, horario y estado "APPROVED"
-        if (loanRequestRepository.existsByReservationDateAndTimeSlotAndStatus(
-                loanRequestDTO.getReservationDate(), loanRequestDTO.getTimeSlot(), LoanRequestStatus.APPROVED)) {
+        // Validar si ya existe una solicitud con la misma fecha, horario y estado "APPROVED" de un proyecto diferente
+        boolean existsConflict = loanRequestRepository.existsByReservationDateAndTimeSlotAndStatusAndProjectIdNot(
+                loanRequestDTO.getReservationDate(), loanRequestDTO.getTimeSlot(), LoanRequestStatus.APPROVED, project.getId());
+
+        // Si existe una solicitud aprobada para otro proyecto, lanzar excepción
+        if (existsConflict) {
             throw new IllegalArgumentException("Ya existe una solicitud aprobada para esta fecha y horario.");
         }
 
@@ -86,7 +89,12 @@ public class LoanRequestService {
         loanRequest = loanRequestRepository.save(loanRequest);
 
         // Notificar a los moderadores
-        notifyModerators(loanRequest, "Nueva Solicitud de Préstamo", "Se ha creado una nueva solicitud de préstamo.");
+        try {
+            notifyModerators(loanRequest, "Nueva Solicitud de Préstamo", "Se ha creado una nueva solicitud de préstamo.");
+        } catch (Exception e) {
+            // Manejar la excepción de manera apropiada (registrar el error, etc.)
+            System.err.println("Error al notificar a los moderadores: " + e.getMessage());
+        }
 
         return mapToDTO(loanRequest);
     }
@@ -201,9 +209,13 @@ public class LoanRequestService {
         // Actualizar el stock de los dispositivos y cambiar el estado si es necesario
         updateDeviceStocks(loanRequest);
 
-        notifyLeader(loanRequest, "Solicitud Aprobada", "La solicitud de préstamo ha sido aprobada.");
         loanRequestRepository.save(loanRequest);
 
+        try {
+            notifyLeader(loanRequest, "Solicitud Aprobada", "La solicitud de préstamo ha sido aprobada.");
+        } catch (Exception e) {
+            System.err.println("Error al notificar al líder: " + e.getMessage());
+        }
     }
 
     private void updateDeviceStocks(LoanRequest loanRequest) {
@@ -233,9 +245,13 @@ public class LoanRequestService {
         loanRequest.setRejectedBy(moderator);
         loanRequest.setRejectedAt(OffsetDateTime.now());
 
-        notifyLeader(loanRequest, "Solicitud Rechazada", "La solicitud de préstamo ha sido rechazada.");
         loanRequestRepository.save(loanRequest);
 
+        try {
+            notifyLeader(loanRequest, "Solicitud Rechazada", "La solicitud de préstamo ha sido rechazada.");
+        } catch (Exception e) {
+            System.err.println("Error al notificar al líder: " + e.getMessage());
+        }
     }
 
     // Devolución de dispositivos a la espera de la aprobación por parte del moderador
@@ -250,8 +266,13 @@ public class LoanRequestService {
         loanRequest.setStatus(LoanRequestStatus.PENDING_RETURN);
         loanRequest.setReturnAt(OffsetDateTime.now());
 
-        notifyLeader(loanRequest, "Solicitud de Devolución ", "Tienes una nueva solicitud de devolución");
         loanRequestRepository.save(loanRequest);
+
+        try {
+            notifyModerators(loanRequest, "Solicitud de Devolución ", "Tienes una nueva solicitud de devolución");
+        } catch (Exception e) {
+            System.err.println("Error al notificar al moderador: " + e.getMessage());
+        }
     }
 
     public void approveReturn(Long id, Long moderatorId) {
@@ -279,6 +300,23 @@ public class LoanRequestService {
             throw new IllegalStateException("Error al aprobar devolución.");
         }
 
+    }
+
+    public void rejectReturn(Long id, Long moderatorId) {
+        LoanRequest loanRequest = loanRequestRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Loan request not found"));
+
+        User moderator = userRepository.findById(moderatorId)
+                .orElseThrow(() -> new RuntimeException("Moderator not found"));
+
+        if (loanRequest.getStatus() != LoanRequestStatus.PENDING_RETURN) {
+            throw new IllegalStateException("Only loan requests pending return can be rejected.");
+        }
+
+        loanRequest.setStatus(LoanRequestStatus.RETURN_REJECTED);
+        loanRequest.setRejectedReturnAt(OffsetDateTime.now());
+
+        loanRequestRepository.save(loanRequest);
     }
 
     public void cancelLoanRequest(Long id) {

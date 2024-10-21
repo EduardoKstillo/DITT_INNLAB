@@ -122,6 +122,54 @@ export class ProjectDetailsPage implements OnInit {
     await alert.present();
   }
   
+  // Método para confirmar y eliminar un miembro del proyecto
+  async confirmRemoveMember(memberId: number) {
+    const alert = await this.alertController.create({
+      header: 'Confirmar',
+      message: '¿Estás seguro de que deseas remover este miembro del proyecto?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+        },
+        {
+          text: 'Remover',
+          handler: () => {
+            // Llamar al método que elimina al miembro del proyecto
+            this.removeMember(memberId);
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
+
+  // Método para eliminar al miembro del proyecto
+  removeMember(memberId: number) {
+    this.projectService.removeMemberFromProject(this.project.id, memberId).subscribe(
+      async () => {
+        const successAlert = await this.alertController.create({
+          header: 'Éxito',
+          message: 'Miembro removido del proyecto.',
+          buttons: ['OK'],
+        });
+        await successAlert.present();
+        // Recargar los detalles del proyecto para actualizar la lista de miembros
+        this.loadProjectDetails(this.project.id);
+      },
+      async (error) => {
+        console.error('Error removing member:', error);
+        const errorAlert = await this.alertController.create({
+          header: 'Error',
+          message: 'No se pudo remover al miembro del proyecto.',
+          buttons: ['OK'],
+        });
+        await errorAlert.present();
+      }
+    );
+  }
+
 
   async openInviteModal() {
     const modal = await this.modalController.create({

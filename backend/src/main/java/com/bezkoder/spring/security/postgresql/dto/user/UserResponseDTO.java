@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Set;
 
 // Para devolver datos del usuario en las respuestas HTTP (en GET).
 @Data
@@ -17,4 +18,5 @@ public class UserResponseDTO {
     private String phone;
     private String dni;
     private LocalDate birthDate;
+    private Set<String> roles;
 }

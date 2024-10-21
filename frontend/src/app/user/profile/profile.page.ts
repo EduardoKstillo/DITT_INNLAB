@@ -53,14 +53,16 @@ export class ProfilePage implements OnInit {
         },
         {
           text: 'Cerrar Sesión',
-          handler: () => {
-            this.authService.logout(); // Cierra sesión
+          handler: async () => {
+            console.log('cerrar sesión');
+            await this.authService.logout(); // Esperar a que se complete el logout
+            console.log('redirigir a login');
             this.router.navigate(['/login']); // Navegar a la página de inicio de sesión
           },
         },
       ],
     });
-
+  
     await alert.present();
   }
 }

@@ -13,12 +13,17 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service
 public class InvitationService {
+
+    private final Logger logger = LoggerFactory.getLogger(InvitationService.class);
 
     private final InvitationRepository invitationRepository;
     private final UserTokenService userTokenService;
@@ -66,17 +71,22 @@ public class InvitationService {
 
     private void sendInvitationNotification(User user, Project project) {
         String token = userTokenService.getTokenByUserId(user.getId());
-        if (token != null) {
+
+        if (token == null) {
+            logger.warn("Token not found for user: " + user.getId() + ". Skipping notification.");
+            return; // Salir del método si no hay token
+        }
+
+        try {
             NotificationRequest notificationRequest = new NotificationRequest();
             notificationRequest.setTitle("Invitación a un proyecto");
             notificationRequest.setBody("Has sido invitado al proyecto: " + project.getName());
             notificationRequest.setToken(token);
 
-            try {
-                fcmService.sendMessageToToken(notificationRequest);
-            } catch (InterruptedException | ExecutionException e) {
-                throw new RuntimeException("Error al enviar la notificación", e);
-            }
+            fcmService.sendMessageToToken(notificationRequest);
+        } catch (InterruptedException | ExecutionException e) {
+            logger.error("Error al enviar la notificación a " + user.getId() + ": " + e.getMessage());
+            // Aquí puedes decidir si deseas lanzar una excepción o no
         }
     }
 
@@ -121,26 +131,31 @@ public class InvitationService {
         User inviter = invitation.getInviter();  // Usuario que envió la invitación
         String token = userTokenService.getTokenByUserId(inviter.getId());
 
-        if (token != null) {
-            String messageBody;
-            if (accepted) {
-                messageBody = invitation.getInvitedUser().getFirstName() + " " + invitation.getInvitedUser().getLastName() +
-                        " ha aceptado tu invitación al proyecto: " + invitation.getProject().getName();
-            } else {
-                messageBody = invitation.getInvitedUser().getFirstName() + " " + invitation.getInvitedUser().getLastName() +
-                        " ha rechazado tu invitación al proyecto: " + invitation.getProject().getName();
-            }
+        if (token == null) {
+            logger.warn("Token not found for inviter: " + inviter.getId() + ". Skipping notification.");
+            return; // Salir del método si no hay token
+        }
 
-            NotificationRequest notificationRequest = new NotificationRequest();
-            notificationRequest.setTitle("Respuesta a la invitación");
-            notificationRequest.setBody(messageBody);
-            notificationRequest.setToken(token);
+        String messageBody;
+        if (accepted) {
+            messageBody = invitation.getInvitedUser().getFirstName() + " " + invitation.getInvitedUser().getLastName() +
+                    " ha aceptado tu invitación al proyecto: " + invitation.getProject().getName();
+        } else {
+            messageBody = invitation.getInvitedUser().getFirstName() + " " + invitation.getInvitedUser().getLastName() +
+                    " ha rechazado tu invitación al proyecto: " + invitation.getProject().getName();
+        }
 
-            try {
-                fcmService.sendMessageToToken(notificationRequest);
-            } catch (InterruptedException | ExecutionException e) {
-                throw new RuntimeException("Error al enviar la notificación al líder del proyecto", e);
-            }
+        NotificationRequest notificationRequest = new NotificationRequest();
+        notificationRequest.setTitle("Respuesta a la invitación");
+        notificationRequest.setBody(messageBody);
+        notificationRequest.setToken(token);
+
+        try {
+            fcmService.sendMessageToToken(notificationRequest);
+        } catch (InterruptedException | ExecutionException e) {
+            logger.error("Error al enviar la notificación al líder del proyecto " + inviter.getId() + ": " + e.getMessage());
+            // Aquí puedes decidir si deseas lanzar una excepción o no
         }
     }
+
 }

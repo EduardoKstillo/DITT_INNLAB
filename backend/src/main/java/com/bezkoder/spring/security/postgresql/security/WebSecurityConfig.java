@@ -82,7 +82,7 @@ public class WebSecurityConfig {
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(Arrays.asList("http://192.168.1.6:8100", "http://localhost:8100"));  // Permitir solicitudes desde tu frontend
+    configuration.setAllowedOrigins(Arrays.asList("http://192.168.1.5:8100", "http://localhost:8100"));  // Permitir solicitudes desde tu frontend
     configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
     configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
     configuration.setAllowCredentials(true);  // Permitir el uso de credenciales como cookies o tokens

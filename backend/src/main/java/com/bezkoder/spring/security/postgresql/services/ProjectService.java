@@ -149,6 +149,7 @@ public class ProjectService {
         List<ProjectMemberDTO> memberDTOs = project.getMembers().stream()
                 .map(user -> {
                     ProjectMemberDTO dto = new ProjectMemberDTO();
+                    dto.setId(user.getId());
                     dto.setEmail(user.getEmail());
                     dto.setFirstName(user.getFirstName());
                     dto.setLastName(user.getLastName());

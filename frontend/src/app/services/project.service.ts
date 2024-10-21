@@ -69,6 +69,19 @@ export class ProjectService {
     return this.http.post(`${this.baseUrl}/${projectId}/invite`, { userEmails }, { headers });
   }
 
+  // Método para eliminar un miembro del proyecto
+  removeMemberFromProject(projectId: number, userId: number): Observable<any> {
+    if (userId === undefined) {
+      console.error('Error: userId es undefined');
+    }
+  
+    const headers = this.getAuthHeaders();
+    return this.http.delete(`${this.baseUrl}/${projectId}/members`, {
+      headers: headers,
+      params: { userId: userId.toString() }  // Pasamos el userId como un parámetro
+    });
+  }
+
   acceptInvitation(token: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/accept-invitation?token=${token}`, {});
   }

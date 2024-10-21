@@ -78,6 +78,14 @@ public class LoanRequestController {
         return ResponseEntity.ok().build();
     }
 
+    // Rechazar la devolución de una solicitud de préstamo
+    @PatchMapping("/{id}/reject-return")
+    public ResponseEntity<Void> rejectReturn(@PathVariable Long id, @RequestParam Long moderatorId) {
+        loanRequestService.rejectReturn(id, moderatorId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // Cancelar una solicitud de préstamo
     @PatchMapping("/{id}/cancel")
     public ResponseEntity<String> cancelLoanRequest(@PathVariable Long id) {
         try {

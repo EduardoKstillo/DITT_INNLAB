@@ -41,7 +41,8 @@ rejectInvitation(invitationId: number): Observable<any> {
   // Invitar miembros al proyecto
   inviteMembers(projectId: number, emails: string[], inviterId: number): Observable<any> {
     const headers = this.getAuthHeaders();
-    const body = { emails, inviterId };  // Ahora incluye el ID del usuario que invita
+    const body = { projectId, emails, inviterId };  // Ahora incluye el ID del usuario que invita
+    console.log(body);
     return this.http.post(`${this.baseUrl}/project/${projectId}/invite`, body, { headers });
   }
 }

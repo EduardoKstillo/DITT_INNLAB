@@ -12,7 +12,8 @@
   <ion-searchbar 
     [(ngModel)]="searchQuery" 
     (ionInput)="onSearchInput($event)" 
-    placeholder="Buscar dispositivos...">
+    placeholder="Buscar dispositivos..."
+    class="custom-searchbar">
   </ion-searchbar>
 
   <ion-list>
@@ -57,8 +58,8 @@
   <!-- Modal para mostrar el carrito de dispositivos -->
   <ion-modal [isOpen]="isModalOpen" (ionModalDidDismiss)="closeModal()">
     <ng-template>
-      <ion-header>
-        <ion-toolbar>
+      <ion-header class="ion-header-card">
+        <ion-toolbar class="ion-toolbar-card">
           <ion-title>Carrito de Dispositivos</ion-title>
           <ion-buttons slot="end">
             <ion-button (click)="closeModal()">Cerrar</ion-button>

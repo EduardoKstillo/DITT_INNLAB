@@ -1,3 +1,20 @@
+
+ion-header {
+  background: var(--ion-background-color); // Color de fondo dinámico según el tema
+}
+
+ion-toolbar {
+  --background: var(--ion-background-color); // Fondo del toolbar dinámico
+}
+
+.ion-header-card {
+  --background: var(--ion-item-background);
+}
+
+.ion-toolbar-card {
+  --background: var(--ion-background-color); // Fondo del toolbar dinámico
+}
+
 .counter-button-container {
   display: flex;
   flex-direction: column;
@@ -21,9 +38,19 @@ ion-modal::part(backdrop) {
   opacity: 1;
 }
 
-ion-modal ion-toolbar {
-  --background: #121212;
-  --color: white;
+ion-datetime {
+  --background: var(--ion-background-color);
+  --background-rgb: 255, 241, 242;
+
+  border-radius: 16px;
+  box-shadow: 0 1px 5px rgba(146, 146, 146, 0.363);
+}
+
+ion-modal {
+  --background: var(--ion-background-color); // Color de fondo
+  --color: var(--ion-text-color); // Color del texto
+  border-radius: 16px; // Bordes redondeados
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); // Sombra
 }
 
 .center-select {
@@ -32,13 +59,22 @@ ion-modal ion-toolbar {
   width: fit-content; /* Ajusta el ancho al contenido */
 }
 .custom-padding {
-  padding-left: 16px; /* Ajusta según lo necesites */
-  padding-right: 16px; /* Ajusta según lo necesites */
+  padding: 20px; // Ajusta el padding según sea necesario
+}
+
+.custom-searchbar {
+  --background: var(--ion-background-color); // Color de fondo
+  --color: var(--ion-text-color); // Color del texto
+  --placeholder-color: var(--ion-text-secondary); // Color del placeholder
+  border-radius: var(--ion-border-radius, 10px); // Bordes redondeados
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); // Sombra
+  margin-bottom: 10px; // Espacio debajo del buscador
 }
 
 @media (min-width: 768px) {
   .custom-padding {
     padding-left: 32px; /* Espacio más amplio en pantallas grandes */
     padding-right: 32px; /* Espacio más amplio en pantallas grandes */
-  }
+  } 
 }
+

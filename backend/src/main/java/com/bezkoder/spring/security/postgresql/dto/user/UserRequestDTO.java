@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 // Para recibir datos del usuario desde las solicitudes HTTP (normalmente en POST y PUT).
 @Data
@@ -16,7 +17,6 @@ public class UserRequestDTO {
     @Email
     private String email;
 
-    @NotBlank
     @Size(max = 120)
     private String password;
 
@@ -36,4 +36,5 @@ public class UserRequestDTO {
     private String dni;
 
     private LocalDate birthDate;
+    private Set<Long> roleIds;
 }

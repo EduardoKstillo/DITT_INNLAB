@@ -132,6 +132,48 @@ export class LoanRequestDetailsPage implements OnInit {
     await alert.present();
   }
 
+  async rejectedReturnRequest() {
+    const alert = await this.alertController.create({
+      header: 'Confirmar',
+      message: '¿Estás seguro de que deseas aprobar esta devolución?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+        },
+        {
+          text: 'Rechazar',
+          handler: () => {
+            this.loanRequestService.rejectedReturn(this.loanRequest.id, this.moderatorId).subscribe(
+              async () => {
+                const successAlert = await this.alertController.create({
+                  header: 'Éxito',
+                  message: 'Devolución rechazada.',
+                  buttons: ['OK'],
+                });
+                await successAlert.present();
+                this.router.navigate(['/moderator-loan-requests']);
+              },
+              async (error) => {
+                console.error('Error rejecting return request:', error);
+                const errorAlert = await this.alertController.create({
+                  header: 'Error',
+                  message: 'Error al rechazar la devolución de la solicitud.',
+                  buttons: ['OK'],
+                });
+                await errorAlert.present();
+              }
+            );
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  
   async returnRequest() {
     const alert = await this.alertController.create({
       header: 'Confirmar',

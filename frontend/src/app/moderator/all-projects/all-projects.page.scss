@@ -12,6 +12,13 @@ ion-item {
   box-shadow: 0 1px 5px rgba(146, 146, 146, 0.363); /* Sombra en los campos */
 }
 
+.no-devices-text {
+  text-align: center; /* Centra el texto */
+  margin-top: 20px; /* Espaciado superior */
+  font-size: 18px;
+  color: #ccc;
+}
+
 /* Ajuste de márgenes o padding según el tamaño de la pantalla */
 @media (max-width: 768px) {
   ion-item {

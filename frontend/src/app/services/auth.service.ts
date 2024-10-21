@@ -94,19 +94,24 @@ export class AuthService {
   }
 
   // Logout - Eliminar el token y los detalles del usuario del almacenamiento
-  logout(): void {
+  logout(): Promise<void> {
     const userId = this.getLoggedInUserId(); // Obtener el ID del usuario
-    console.log("cerrar sesionj: ", userId)
-    if (userId) {
-        // Enviar solicitud para eliminar el token del dispositivo
-        this.http.post(`${this.baseUrl}/logout-device/${userId}`, {}).subscribe(() => {
-            console.log('Logout successful');
-            localStorage.removeItem(this.TOKEN_KEY);  // Eliminar el token
-            localStorage.removeItem(this.USER_KEY);   // Eliminar los detalles del usuario
-        }, error => {
-            console.error('Error during logout:', error);
-        });
-    }
+    return new Promise((resolve, reject) => {
+        if (userId) {
+            // Enviar solicitud para eliminar el token del dispositivo
+            this.http.post(`${this.baseUrl}/logout-device/${userId}`, {}).subscribe(() => {
+                console.log('Logout successful');
+                localStorage.removeItem(this.TOKEN_KEY);  // Eliminar el token
+                localStorage.removeItem(this.USER_KEY);   // Eliminar los detalles del usuario
+                resolve();  // Resuelve la promesa cuando el logout ha sido exitoso
+            }, error => {
+                console.error('Error during logout:', error);
+                reject(error);  // Rechaza la promesa si hay un error
+            });
+        } else {
+            resolve();  // Si no hay userId, simplemente resolver
+        }
+    });
 }
   
   // Verificar si el usuario está autenticado (si hay un token almacenado)

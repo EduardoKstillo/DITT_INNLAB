@@ -53,6 +53,19 @@
     bottom: 0;
     left: 0;
     right: 0;
+    ion-icon {
+      color: var(--ion-text-color); // Color de los íconos también dinámico
+      font-size: 20px;
+    }
+  }
+
+  .dark-mode {
+    margin: 0 auto; // Centrando el div
+    text-align: center; // Centrando el contenido dentro del div
+    position: absolute; // Posición absoluta para controlar su ubicación
+    bottom: 70px; // Ajustar esta distancia según sea necesario
+    left: 0;
+    right: 0;
   }
 
   .logout-button {

@@ -76,9 +76,26 @@ public class AuthController {
   }
 
   @PostMapping("/logout-device/{userId}")
-  public ResponseEntity<Void> logoutDevice(@PathVariable Long userId) {
+  public ResponseEntity<Void> logoutDevice(@PathVariable Long userId,
+                                           @RequestHeader("User-Agent") String userAgent) {
+
+    System.out.println(userAgent);
+    // Detectar si la solicitud viene de un navegador web
+    if (isFromWeb(userAgent)) {
+      // Si es una solicitud desde un navegador web, no ejecutamos la eliminación del token
+      return ResponseEntity.ok().build();
+    }
+
+    // Si no viene de un navegador web, eliminamos el token
     userTokenService.deleteUserToken(userId);
     return ResponseEntity.ok().build();
+  }
+
+  // Método auxiliar para detectar si es una solicitud desde un navegador web
+  private boolean isFromWeb(String userAgent) {
+    return userAgent.toLowerCase().contains("mozilla") ||
+            userAgent.toLowerCase().contains("chrome") ||
+            userAgent.toLowerCase().contains("safari");
   }
 
   @PostMapping("/signin")

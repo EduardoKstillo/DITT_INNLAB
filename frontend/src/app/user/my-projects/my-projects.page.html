@@ -7,35 +7,35 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="ion-padding custom-content">
   <ion-grid>
     <ion-row>
-      <ion-col size="12" size-md="6" offset-md="3">
-        <!-- Este div contendrá la lista de proyectos y se ajustará según el tamaño de la pantalla -->
-        <div *ngIf="projects.length > 0">
-          <ion-item *ngFor="let project of projects" (click)="viewProjectDetails(project.id)">
-            <ion-label>
-              <h2>{{ project.name }}</h2>
-              <p>{{ project.description }}</p>
-              <p>Status: {{ project.status }}</p>
-            </ion-label>
-            <ion-button slot="end" color="danger" (click)="deleteProject(project.id, $event)" *ngIf="project?.leaderName === loggedInUserName">
-              <ion-icon name="trash"></ion-icon>
-            </ion-button>
-            <ion-button slot="end" color="warning" (click)="editProject(project.id)" *ngIf="project?.leaderName === loggedInUserName">
-              <ion-icon name="pencil"></ion-icon>
-            </ion-button>
-          </ion-item>
-        </div>
-
-        <!-- Mostrar mensaje si no hay proyectos -->
-        <ion-text *ngIf="projects.length === 0" color="medium">
+      <ion-col size="12" *ngIf="projects.length === 0">
+        <ion-text color="medium" class="no-projects-text">
           <p>No tienes proyectos creados.</p>
         </ion-text>
-        
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12" size-md="6" offset-md="3" *ngFor="let project of projects">
+        <ion-item (click)="viewProjectDetails(project.id)">
+          <ion-label>
+            <h2>{{ project.name }}</h2>
+            <p>{{ project.description }}</p>
+            <p>Status: {{ project.status }}</p>
+          </ion-label>
+          <ion-button slot="end" color="danger" (click)="deleteProject(project.id, $event)" *ngIf="project?.leaderName === loggedInUserName">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+          <ion-button slot="end" color="warning" (click)="editProject(project.id)" *ngIf="project?.leaderName === loggedInUserName">
+            <ion-icon name="pencil"></ion-icon>
+          </ion-button>
+        </ion-item>
       </ion-col>
     </ion-row>
   </ion-grid>
+
   <!-- Botón para crear un nuevo proyecto -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="createProject()">

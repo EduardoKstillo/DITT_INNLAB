@@ -68,6 +68,9 @@ public class LoanRequest {
     private OffsetDateTime returnAt; // Fecha de devolución mandada por el lider del proyecto
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
-    private OffsetDateTime approveReturnAt; // Fecha de devolución aprobada/rechazada por el moderador
+    private OffsetDateTime approveReturnAt; // Fecha de devolución aprobada por el moderador
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+    private OffsetDateTime rejectedReturnAt; // Fecha de devolución aprobada/rechazada por el moderador
 
 }

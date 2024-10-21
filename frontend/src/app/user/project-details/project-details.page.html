@@ -30,6 +30,14 @@
                   <h2>{{ member.firstName }} {{ member.lastName }}</h2>
                   <p>{{ member.email }}</p>
                 </ion-label>
+                <ion-button 
+                  fill="outline" 
+                  color="danger" 
+                  slot="end" 
+                  *ngIf="project?.leaderName === loggedInUserName" 
+                  (click)="confirmRemoveMember(member.id)">
+                  Remover
+                </ion-button>
               </ion-item>
             </ion-list>
           </ion-card-content>
@@ -55,7 +63,7 @@
                     </li>
                   </ul>
                   <!-- Botón que solo aparece si el estado es 'APPROVED' -->
-                  <ion-button class="btn-returning-devices" fill="outline" color="danger" *ngIf="loanRequest.status === 'APPROVED'" (click)="returnDevice(loanRequest.id, $event)">
+                  <ion-button class="btn-returning-devices" fill="outline" color="danger" *ngIf="loanRequest.status === 'APPROVED' && project?.leaderName === loggedInUserName" (click)="returnDevice(loanRequest.id, $event)">
                     Devolver
                   </ion-button>
                   <hr>

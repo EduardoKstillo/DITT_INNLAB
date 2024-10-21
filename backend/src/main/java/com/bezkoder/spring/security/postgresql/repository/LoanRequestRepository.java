@@ -21,4 +21,9 @@ public interface LoanRequestRepository extends JpaRepository<LoanRequest, Long> 
 
     // Consulta para verificar si ya existe una solicitud APROBADA en el mismo horario para un proyecto
     boolean existsByReservationDateAndTimeSlotAndStatus(LocalDate reservationDate, String timeSlot, LoanRequestStatus status);
+
+    // Consulta para verificar si ya existe una solicitud APROBADA en el mismo horario para un proyecto diferente
+    boolean existsByReservationDateAndTimeSlotAndStatusAndProjectIdNot(
+            LocalDate reservationDate, String timeSlot, LoanRequestStatus status, Long projectId);
+
 }
