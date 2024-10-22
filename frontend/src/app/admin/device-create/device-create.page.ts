@@ -16,8 +16,9 @@ export class DeviceCreatePage {
     series: '',
     quantity: 0,
     additional: '',
+    sensorType: '',
     color: '',
-    status: 'DISPONIBLE' // Puedes establecer valores predeterminados
+    status: 'DISPONIBLE'
   };
 
   constructor(
@@ -53,6 +54,24 @@ export class DeviceCreatePage {
     );
   }
 
+  onTypeChange(selectedType: string) {
+    // Si cambia a un tipo que no sea IoT, limpia los campos específicos de IoT
+    if (selectedType !== 'IoT') {
+      this.deviceData.sensorType = ''; // Limpia el campo de tipo de sensor
+    }
+    
+    // Si cambia a IoT, limpia los campos específicos de otros tipos
+    if (selectedType === 'IoT') {
+      this.deviceData.series = '';
+      this.deviceData.color = '';
+      this.deviceData.additional = '';
+    } else {
+      // Si es Mobile o Metaverso, limpia el campo de sensorType
+      this.deviceData.sensorType = '';
+    }
+  }
+  
+
   // Función para resetear el formulario
   resetForm() {
     this.deviceData = {
@@ -61,9 +80,10 @@ export class DeviceCreatePage {
       characteristics: '',
       series: '',
       quantity: 0,
+      sensorType: '',
       additional: '',
       color: '',
-      status: 'DISPONIBLE' // Volver a los valores predeterminados
+      status: 'DISPONIBLE'
     };
   }
 }

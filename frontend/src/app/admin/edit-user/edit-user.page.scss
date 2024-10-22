@@ -1,0 +1,63 @@
+ion-header, ion-toolbar {
+    background-color: var(--ion-toolbar-background);
+    color: var(--ion-text-color);
+  }
+  
+  .edit-user-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: var(--ion-card-background);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  ion-input {
+    --border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    background: var(--ion-input-background);
+    color: var(--ion-text-color);
+  }
+
+  
+  .save-user-btn {
+    --background: linear-gradient(135deg, var(--ion-color-primary), #00c6ff);
+    --color: var(--ion-color-primary-contrast);
+    border-radius: 10px;
+    margin-top: 20px;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .error-message {
+    color: var(--ion-color-danger);
+    font-size: 12px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .input-icon {
+    color: var(--ion-text-secondary);
+  }
+
+  ion-datetime {
+    --background: var(--ion-card-color);
+    border-radius: 16px;
+    box-shadow: 0 1px 5px rgba(146, 146, 146, 0.363);
+    margin-bottom: 10px;
+  }
+
+  ion-checkbox {
+    --background: var(--ion-card-color);
+    --color: var(--ion-color-primary); /* Color del checkbox cuando está seleccionado */
+    --color-checked: var(--ion-color-primary); /* Color cuando está marcado */
+    --color-checked: var(--ion-color-primary-contrast); /* Color del texto cuando está marcado */
+    --border-radius: 10px; /* Esquinas redondeadas */
+    margin-bottom: 20px;
+  }
+  
+  ion-checkbox:focus {
+    box-shadow: 0 0 0 3px rgba(0, 128, 255, 0.5); /* Sombra al hacer foco */
+  }

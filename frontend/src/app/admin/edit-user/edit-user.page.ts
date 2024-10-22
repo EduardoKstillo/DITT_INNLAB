@@ -15,6 +15,7 @@ export class EditUserPage implements OnInit {
   userForm: FormGroup = this.fb.group({});
   userRoles: string[] = ['ROLE_USER', 'ROLE_MODERATOR', 'ROLE_ADMIN']; // Lista de roles disponibles
   selectedRoles: string[] = []; // Roles seleccionados por el usuario
+  submitted = false;  // <-- Nueva propiedad para seguimiento de envío de formulario
 
   constructor(
     private route: ActivatedRoute,
@@ -27,7 +28,6 @@ export class EditUserPage implements OnInit {
    }
 
   ngOnInit() {
-    
     // Inicializar el formulario
     this.userForm = this.fb.group({
       firstName: ['', Validators.required],
@@ -36,8 +36,7 @@ export class EditUserPage implements OnInit {
       university: ['', Validators.required],
       phone: [''],
       dni: ['', Validators.required],
-      birthDate: [''],
-      roles: [[]]
+      roles: [[], Validators.required] // Añadimos que roles sea requerido
     });
 
     this.loadUserDetails();
@@ -52,7 +51,6 @@ export class EditUserPage implements OnInit {
         university: user.university,
         phone: user.phone,
         dni: user.dni,
-        birthDate: user.birthDate,
         roles: user.roles
       });
       this.selectedRoles = user.roles;
@@ -65,9 +63,15 @@ export class EditUserPage implements OnInit {
     } else {
       this.selectedRoles = this.selectedRoles.filter(r => r !== role);
     }
+    
+    // Actualizamos el campo roles del formulario cada vez que cambia el rol seleccionado
+    this.userForm.get('roles')?.setValue(this.selectedRoles);
+    this.userForm.get('roles')?.updateValueAndValidity();
   }
 
   async saveUser() {
+    this.submitted = true; // Marcamos como enviado
+
     if (this.userForm.valid) {
       const updatedUser = {
         ...this.userForm.value,

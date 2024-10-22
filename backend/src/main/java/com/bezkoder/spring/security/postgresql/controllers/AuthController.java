@@ -91,7 +91,7 @@ public class AuthController {
     return ResponseEntity.ok().build();
   }
 
-  // Método auxiliar para detectar si es una solicitud desde un navegador web
+  // Metodo auxiliar para detectar si es una solicitud desde un navegador web
   private boolean isFromWeb(String userAgent) {
     return userAgent.toLowerCase().contains("mozilla") ||
             userAgent.toLowerCase().contains("chrome") ||

@@ -7,30 +7,32 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="ion-padding custom-content">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-md="6" offset-md="3">
+        <!-- Si no hay usuarios -->
+        <ion-text *ngIf="users.length === 0" color="medium" class="no-users-text">
+          <p>No hay usuarios creados actualmente.</p>
+        </ion-text>
 
-  <div>
-    <ion-item *ngFor="let user of users">
-      <ion-label>
-        <h2>{{ user.firstName }} {{ user.lastName }}</h2>
-        <p> {{ user.email }} </p>
-        <p> {{ user.university }} </p>
-        <p> {{ user.dni }} </p>
-      </ion-label>
-      <ion-button slot="end" color="danger" (click)="deleteUser(user.id); $event.stopPropagation();">
-        <ion-icon name="trash"></ion-icon>
-      </ion-button>
-      <ion-button slot="end" color="warning" (click)="editUser(user.id); $event.stopPropagation();">
-        <ion-icon name="pencil"></ion-icon>
-      </ion-button>
-    </ion-item>
-  </div>
-
-  <!-- Botón para crear un nuevo proyecto -->
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="navigateToCreate()">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-
+        <!-- Listado de usuarios -->
+        <!-- <ion-item *ngFor="let user of users" (click)="navigateToDetail(user.id)"> -->
+        <ion-item *ngFor="let user of users">
+          <ion-label>
+            <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+            <p>{{ user.email }}</p>
+            <p>{{ user.university }}</p>
+            <p>{{ user.dni }}</p>
+          </ion-label>
+          <ion-button slot="end" color="danger" (click)="deleteUser(user.id); $event.stopPropagation();">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+          <ion-button slot="end" color="warning" (click)="editUser(user.id); $event.stopPropagation();">
+            <ion-icon name="pencil"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

@@ -38,6 +38,9 @@ LaboratoryDevice {
   private String additional;
 
   @NotBlank
+  private String sensorType;
+
+  @NotBlank
   private String color;
 
   @Enumerated(EnumType.STRING)

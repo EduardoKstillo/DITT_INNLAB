@@ -37,7 +37,7 @@ ion-toolbar {
 
   .personal-info {
     border-radius: 10px; /* Usar border-radius de variable global */
-    box-shadow: 0 1px 6px rgba(146, 146, 146, 0.363); /* Usar sombra de variable global */
+    box-shadow: var(--ion-box-shadow); /* Usar sombra de variable global */
     background-color: var(--ion-card-background); /* Fondo usando la variable global */
     padding-right: 10px;
     padding-left: 10px;

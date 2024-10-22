@@ -43,8 +43,4 @@ export class UserListPage implements OnInit {
       );
     }
   }
-
-  navigateToCreate() {
-    this.router.navigate(['/create-user']); // Navegar a la página de creación de dispositivos
-  }
 }

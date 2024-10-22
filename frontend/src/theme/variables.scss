@@ -9,11 +9,15 @@
   /* Fuente personalizada */
   --ion-font-family: 'MyCustomFont', sans-serif;
 
+  --ion-box-shadow: 0 1px 6px rgba(66, 65, 65, 0.363);
+
   /* Colores principales para el modo claro */
   --ion-color-primary: #007aff;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-danger: #e53e3e; /* Botón de eliminar en modo claro */
   --ion-color-warning: #ffcc00; /* Botón de editar en modo claro */
+
+  --ion-input-background: #f7f7f7;
 
   /* Colores del modo claro */
   --ion-background-color: #ffffff; /* Fondo claro */
@@ -41,7 +45,10 @@ body.dark {
   --ion-text-color: #f0f0f0; /* Texto claro */
   --ion-text-secondary: #a1a1a1; /* Texto secundario oscuro */
   --ion-text-danger: #ff4d4d; /* Texto de advertencia en oscuro */
-  --ion-card-background: #121212; /* Fondo de tarjetas en oscuro */
+  --ion-card-background: #141414; /* Fondo de tarjetas en oscuro */
+  --ion-input-background: #141414; /* Fondo de tarjetas en oscuro */
+
+  --ion-box-shadow: 0 1px 5px rgba(146, 146, 146, 0.363);
 
   /* Colores de botones en modo oscuro */
   --ion-color-danger: #ff4d4d; /* Botón de eliminar */

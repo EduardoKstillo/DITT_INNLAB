@@ -1,58 +1,85 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
     <ion-title>Editar Usuario</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <form [formGroup]="userForm" (ngSubmit)="saveUser()">
-    
-    <ion-item>
-      <ion-label position="floating">Nombre</ion-label>
-      <ion-input formControlName="firstName"></ion-input>
-    </ion-item>
+<ion-content class="ion-padding">
+  <div class="edit-user-container">
+    <form [formGroup]="userForm" (ngSubmit)="saveUser()" novalidate>
+      
+      <!-- Nombre -->
+      <div class="input-container">
+        <ion-input label="Nombre" label-placement="floating" fill="outline" placeholder="Nombre del usuario" formControlName="firstName" required>
+          <ion-icon slot="start" name="person-outline" class="input-icon"></ion-icon>
+        </ion-input>
+        <div *ngIf="submitted || userForm.get('firstName')?.touched">
+          <p *ngIf="userForm.get('firstName')?.invalid">El nombre es obligatorio.</p>
+        </div>
+      </div>
 
-    <ion-item>
-      <ion-label position="floating">Apellido</ion-label>
-      <ion-input formControlName="lastName"></ion-input>
-    </ion-item>
+      <!-- Apellido -->
+      <div class="input-container">
+        <ion-input label="Apellido" label-placement="floating" fill="outline" placeholder="Apellido del usuario" formControlName="lastName" required>
+          <ion-icon slot="start" name="person-outline" class="input-icon"></ion-icon>
+        </ion-input>
+        <div *ngIf="(submitted || userForm.get('lastName')?.touched) && userForm.get('lastName')?.invalid">
+          <p>El apellido es obligatorio.</p>
+        </div>
+      </div>
 
-    <ion-item>
-      <ion-label position="floating">Email</ion-label>
-      <ion-input formControlName="email" type="email"></ion-input>
-    </ion-item>
+      <!-- Email -->
+      <div class="input-container">
+        <ion-input label="Email" label-placement="floating" fill="outline" placeholder="Correo electrónico" formControlName="email" type="email" required>
+          <ion-icon slot="start" name="mail-outline" class="input-icon"></ion-icon>
+        </ion-input>
+        <div *ngIf="(submitted || userForm.get('email')?.touched) && userForm.get('email')?.invalid">
+          <p>El correo es obligatorio y debe ser válido.</p>
+        </div>
+      </div>
 
-    <ion-item>
-      <ion-label position="floating">Universidad</ion-label>
-      <ion-input formControlName="university"></ion-input>
-    </ion-item>
+      <!-- Universidad -->
+      <div class="input-container">
+        <ion-input label="Universidad" label-placement="floating" fill="outline" placeholder="Universidad del usuario" formControlName="university" required>
+          <ion-icon slot="start" name="school-outline" class="input-icon"></ion-icon>
+        </ion-input>
+      </div>
 
-    <ion-item>
-      <ion-label position="floating">Teléfono</ion-label>
-      <ion-input formControlName="phone"></ion-input>
-    </ion-item>
+      <!-- Teléfono -->
+      <div class="input-container">
+        <ion-input label="Teléfono" label-placement="floating" fill="outline" placeholder="Número de teléfono" formControlName="phone" type="tel">
+          <ion-icon slot="start" name="call-outline" class="input-icon"></ion-icon>
+        </ion-input>
+      </div>
 
-    <ion-item>
-      <ion-label position="floating">DNI</ion-label>
-      <ion-input formControlName="dni"></ion-input>
-    </ion-item>
+      <!-- DNI -->
+      <div class="input-container">
+        <ion-input label="DNI" label-placement="floating" fill="outline" placeholder="DNI del usuario" formControlName="dni" required>
+          <ion-icon slot="start" name="id-card-outline" class="input-icon"></ion-icon>
+        </ion-input>
+        <div *ngIf="(submitted || userForm.get('dni')?.touched) && userForm.get('dni')?.invalid">
+          <p>El DNI es obligatorio.</p>
+        </div>
+      </div>
 
-    <ion-item>
-      <ion-label position="floating">Fecha de Nacimiento</ion-label>
-      <ion-datetime displayFormat="YYYY-MM-DD" formControlName="birthDate"></ion-datetime>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Roles</ion-label>
-      <ion-list>
-        <ion-item *ngFor="let role of userRoles">
-          <ion-label>{{ role }}</ion-label>
-          <ion-checkbox slot="start" (ionChange)="onRoleChange($event, role)" [checked]="selectedRoles.includes(role)"></ion-checkbox>
+      <!-- Roles -->
+      <div class="input-container">
+        <ion-item class="rol">
+          <ion-label>Roles</ion-label>
+          <ion-list>
+            <ion-item class="roles" *ngFor="let role of userRoles">
+              <ion-label>{{ role }}</ion-label>
+              <ion-checkbox slot="start" (ionChange)="onRoleChange($event, role)" [checked]="selectedRoles.includes(role)"></ion-checkbox>
+            </ion-item>
+          </ion-list>
         </ion-item>
-      </ion-list>
-    </ion-item>
+      </div>
 
-    <ion-button expand="full" type="submit" [disabled]="!userForm.valid">Guardar</ion-button>
-    
-  </form>
+      <!-- Botón de Guardar Usuario -->
+      <ion-button expand="full" type="submit" class="save-user-btn" [disabled]="!userForm.valid">Guardar</ion-button>
+    </form>
+  </div>
 </ion-content>

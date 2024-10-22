@@ -53,6 +53,7 @@ public class LaboratoryDeviceService {
         device.setSeries(dto.getSeries());
         device.setQuantity(dto.getQuantity());
         device.setAdditional(dto.getAdditional());
+        device.setSensorType(dto.getSensorType());
         device.setColor(dto.getColor());
         device.setStatus(dto.getStatus());
         repository.save(device);
@@ -81,6 +82,7 @@ public class LaboratoryDeviceService {
         dto.setSeries(device.getSeries());
         dto.setQuantity(device.getQuantity());
         dto.setAdditional(device.getAdditional());
+        dto.setSensorType(device.getSensorType());
         dto.setColor(device.getColor());
         dto.setStatus(device.getStatus());
         return dto;
@@ -94,6 +96,7 @@ public class LaboratoryDeviceService {
         device.setSeries(dto.getSeries());
         device.setQuantity(dto.getQuantity());
         device.setAdditional(dto.getAdditional());
+        device.setSensorType(dto.getSensorType());
         device.setColor(dto.getColor());
         device.setStatus(EDeviceStatus.DISPONIBLE);
         return device;
