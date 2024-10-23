@@ -175,7 +175,6 @@ public class AuthController {
     return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
   }
 
-
   @GetMapping("/dni-verification")
   public ResponseEntity<?> verifyDni(@RequestParam String dni) {
     String apiUrl = reniecApiUrl + "/api/v1/dni/" + dni + "?token=" + reniecApiToken;
@@ -189,7 +188,4 @@ public class AuthController {
         return ResponseEntity.badRequest().body(new MessageResponse("Error: DNI not found in Reniec."));
     }
   }
-
-
-
 }

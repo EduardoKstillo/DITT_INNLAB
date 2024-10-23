@@ -16,18 +16,18 @@ ion-toolbar {
       height: 100px;
       border-radius: 50%;
       margin-bottom: 10px;
-      border: 3px solid var(--ion-color-primary); /* Borde usando variable */
-      box-shadow: 0 4px 10px rgba(22, 100, 216, 0.5); /* Usar sombras consistentes */
+      border: 3px solid var(--ion-color-primary);
+      box-shadow: 0 4px 10px rgba(22, 100, 216, 0.5);
     }
 
     .profile-name {
       font-size: 24px;
       margin: 5px 0;
-      color: var(--ion-text-color); /* Usar color de texto de la variable */
+      color: var(--ion-text-color);
     }
 
     .profile-status {
-      color: var(--ion-text-secondary); /* Usar color secundario */
+      color: var(--ion-text-secondary);
     }
 
     .edit-button {
@@ -36,21 +36,23 @@ ion-toolbar {
   }
 
   .personal-info {
-    border-radius: 10px; /* Usar border-radius de variable global */
-    box-shadow: var(--ion-box-shadow); /* Usar sombra de variable global */
-    background-color: var(--ion-card-background); /* Fondo usando la variable global */
-    padding-right: 10px;
-    padding-left: 10px;
-    padding-top: 1px;
-
+    width: 90%; /* Ajusta el ancho según tus necesidades */
+    max-width: 600px; /* Establece un ancho máximo para pantallas grandes */
+    margin: 0 auto; /* Centra el div */
+    border-radius: 10px;
+    box-shadow: var(--ion-box-shadow);
+    background-color: var(--ion-card-background);
+    padding: 20px; /* Aumenté el padding para que se vea mejor */
+    
     ion-item {
-      --background: var(--ion-card-background); /* Mismo color de fondo que el contenedor */
-      --border-color: transparent; /* Eliminar el borde predeterminado */
+      --background: var(--ion-card-background);
+      --border-color: transparent;
 
       ion-label {
         font-size: small;
         color: var(--ion-text-color);
       }
+
       ion-note {
         color: #a0a0a0; /* Color del texto para el ion-note (gris) */
       }
@@ -59,7 +61,7 @@ ion-toolbar {
     h3 {
       font-size: medium;
       margin-bottom: 10px;
-      color: var(--ion-text-color); /* Color de texto primario */
+      color: var(--ion-text-color);
     }
   }
 }

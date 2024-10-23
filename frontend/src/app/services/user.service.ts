@@ -51,6 +51,7 @@ export class UserService {
 
   // Actualizar un usuario
   updateUser(id: number, userData: any): Observable<any> {
+    console.log(userData)
     return this.http.put(`${this.baseUrl}/update/${id}`, userData, { headers: this.getAuthHeaders() }).pipe(
       catchError(this.handleError)
     );

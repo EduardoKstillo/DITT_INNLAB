@@ -38,8 +38,6 @@ public class SignupRequest {
   @Size(max = 8)
   private String dni;
 
-  private Date birthDate;
-
   @Size(max = 255)
   private String photo;
 

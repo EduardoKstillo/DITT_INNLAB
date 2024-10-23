@@ -17,6 +17,5 @@ public class UserResponseDTO {
     private String university;
     private String phone;
     private String dni;
-    private LocalDate birthDate;
     private Set<String> roles;
 }

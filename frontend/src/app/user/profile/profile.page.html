@@ -13,7 +13,7 @@
       <img src="../../../assets/images/profiledefault.avif" alt="Profile Picture" class="profile-picture" />
       <h2 class="profile-name">{{ user.firstName }} {{ user.lastName }}</h2>
       <p class="profile-status">Email: {{ user.email }}</p>
-      <ion-button color="primary" fill="clear" class="edit-button">Edit
+      <ion-button color="primary" fill="clear" class="edit-button" (click)="editUser(user.id); $event.stopPropagation();">Edit
         <ion-icon name="create"></ion-icon>
       </ion-button>
     </div>
@@ -31,10 +31,6 @@
       <ion-item>
         <ion-label>Universidad</ion-label>
         <ion-note slot="end">{{ user.university || 'N/A' }}</ion-note>
-      </ion-item>
-      <ion-item>
-        <ion-label>Fecha de Nacimiento</ion-label>
-        <ion-note slot="end">{{ user.birthDate || 'N/A' }}</ion-note>
       </ion-item>
     </div>
   </div>

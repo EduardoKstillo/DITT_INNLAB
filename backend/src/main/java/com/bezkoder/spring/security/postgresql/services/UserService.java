@@ -2,14 +2,21 @@ package com.bezkoder.spring.security.postgresql.services;
 
 import com.bezkoder.spring.security.postgresql.dto.user.UserRequestDTO;
 import com.bezkoder.spring.security.postgresql.dto.user.UserResponseDTO;
+import com.bezkoder.spring.security.postgresql.models.ERole;
 import com.bezkoder.spring.security.postgresql.models.Role;
 import com.bezkoder.spring.security.postgresql.models.User;
+import com.bezkoder.spring.security.postgresql.payload.request.SignupRequest;
+import com.bezkoder.spring.security.postgresql.payload.response.MessageResponse;
 import com.bezkoder.spring.security.postgresql.repository.RoleRepository;
 import com.bezkoder.spring.security.postgresql.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.HashSet;
 import java.util.List;
@@ -50,37 +57,67 @@ public class UserService {
 
     // Actualizar un usuario
     @Transactional
-    public UserResponseDTO updateUser(Long id, UserRequestDTO userRequestDTO) {
-        try {
-            System.out.println(userRequestDTO);
-            return userRepository.findById(id)
-                    .map(user -> {
-                        user.setFirstName(userRequestDTO.getFirstName());
-                        user.setLastName(userRequestDTO.getLastName());
-                        user.setEmail(userRequestDTO.getEmail());
-                        if (userRequestDTO.getPassword() != null) {
-                            user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
-                        }
-                        user.setUniversity(userRequestDTO.getUniversity());
-                        user.setPhone(userRequestDTO.getPhone());
-                        user.setDni(userRequestDTO.getDni());
-                        user.setBirthDate(userRequestDTO.getBirthDate());
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @Valid @RequestBody UserRequestDTO UserRequestDTO) {
 
-                        if (userRequestDTO.getRoleIds() != null && !userRequestDTO.getRoleIds().isEmpty()) {
-                            List<Role> roles = roleRepository.findAllById(userRequestDTO.getRoleIds());
-                            user.setRoles(new HashSet<>(roles));
-                        }
+        System.out.println(UserRequestDTO);
+        // Buscar al usuario existente por ID
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Error: User not found."));
 
-                        User updatedUser = userRepository.save(user);
-                        return mapToDTO(updatedUser);
-                    })
-                    .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con id: " + id));
-        } catch (Exception e) {
-            // Aquí puedes imprimir el stacktrace para más detalles
-            e.printStackTrace();
-            throw new RuntimeException("Ocurrió un error inesperado al actualizar el usuario", e);
+        // Verificar si el correo electrónico ya está en uso por otro usuario
+        if (userRepository.existsByEmail(UserRequestDTO.getEmail()) &&
+                !user.getEmail().equals(UserRequestDTO.getEmail())) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
         }
+
+        // Actualizar campos
+        user.setFirstName(UserRequestDTO.getFirstName());
+        user.setLastName(UserRequestDTO.getLastName());
+        user.setUniversity(UserRequestDTO.getUniversity());
+        user.setEmail(UserRequestDTO.getEmail());
+        user.setPhone(UserRequestDTO.getPhone());
+
+        // Actualizar contraseña solo si se proporciona
+        if (UserRequestDTO.getPassword() != null && !UserRequestDTO.getPassword().isEmpty()) {
+            user.setPassword(passwordEncoder.encode(UserRequestDTO.getPassword()));
+        }
+
+        // Actualizar roles si es necesario
+        Set<String> strRoles = UserRequestDTO.getRoles();
+        Set<Role> roles = new HashSet<>();
+
+        if (strRoles != null) {
+            strRoles.forEach(role -> {
+                switch (role) {
+                    case "admin":
+                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(adminRole);
+                        break;
+                    case "mod":
+                        Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(modRole);
+                        break;
+                    default:
+                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(userRole);
+                }
+            });
+        } else {
+            // Si no se proporcionan roles, se asigna el rol de usuario por defecto
+            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            roles.add(userRole);
+        }
+
+        user.setRoles(roles);
+        userRepository.save(user);
+
+        return ResponseEntity.ok(new MessageResponse("User updated successfully!"));
     }
+
 
 
     // Eliminar un usuario
@@ -106,7 +143,6 @@ public class UserService {
         user.setUniversity(userRequestDTO.getUniversity());
         user.setPhone(userRequestDTO.getPhone());
         user.setDni(userRequestDTO.getDni());
-        user.setBirthDate(userRequestDTO.getBirthDate());
         return user;
     }
 
@@ -119,7 +155,6 @@ public class UserService {
         userResponseDTO.setUniversity(user.getUniversity());
         userResponseDTO.setPhone(user.getPhone());
         userResponseDTO.setDni(user.getDni());
-        userResponseDTO.setBirthDate(user.getBirthDate());
 
         Set<String> roles = user.getRoles().stream()
                 .map(role -> role.getName().name()) // Convertir el enum ERole a String

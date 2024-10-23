@@ -10,7 +10,7 @@
 <ion-content class="ion-padding">
   <div class="edit-user-container">
     <form [formGroup]="userForm" (ngSubmit)="saveUser()" novalidate>
-      
+
       <!-- Nombre -->
       <div class="input-container">
         <ion-input label="Nombre" label-placement="floating" fill="outline" placeholder="Nombre del usuario" formControlName="firstName" required>
@@ -65,14 +65,24 @@
         </div>
       </div>
 
-      <!-- Roles -->
+      <!-- Contraseña -->
       <div class="input-container">
+        <ion-input label="Contraseña" label-placement="floating" fill="outline" placeholder="Nueva contraseña (opcional)" formControlName="password" type="password">
+          <ion-icon slot="start" name="lock-closed-outline" class="input-icon"></ion-icon>
+        </ion-input>
+        <div *ngIf="(submitted || userForm.get('password')?.touched) && userForm.get('password')?.invalid">
+          <p>La contraseña debe tener al menos 6 caracteres.</p>
+        </div>
+      </div>
+
+      <!-- Roles -->
+      <div class="input-container" *ngIf="hasAdminRole()">
         <ion-item class="rol">
           <ion-label>Roles</ion-label>
           <ion-list>
-            <ion-item class="roles" *ngFor="let role of userRoles">
-              <ion-label>{{ role }}</ion-label>
-              <ion-checkbox slot="start" (ionChange)="onRoleChange($event, role)" [checked]="selectedRoles.includes(role)"></ion-checkbox>
+            <ion-item class="roles" *ngFor="let role of roles">
+              <ion-label>{{ role.name }}</ion-label>
+              <ion-checkbox slot="start" (ionChange)="onRoleChange($event, role.id)" [checked]="selectedRoles.includes(role.id)"></ion-checkbox>
             </ion-item>
           </ion-list>
         </ion-item>

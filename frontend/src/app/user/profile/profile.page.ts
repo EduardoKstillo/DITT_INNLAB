@@ -65,4 +65,8 @@ export class ProfilePage implements OnInit {
   
     await alert.present();
   }
+
+  editUser(id: number) {
+    this.router.navigate([`/edit-user/${id}`]);
+  }
 }

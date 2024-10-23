@@ -59,8 +59,6 @@ public class User {
   @Size(max = 20)
   private String dni;
 
-  private LocalDate birthDate;
-
   @Size(max = 255)
   private String photo;
 

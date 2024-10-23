@@ -17,8 +17,10 @@ public class UserRequestDTO {
     @Email
     private String email;
 
-    @Size(max = 120)
-    private String password;
+    private Set<String> roles; // Este campo puede ser opcional en actualizaciones
+
+    @Size(min = 6, max = 40)
+    private String password; // Este campo debe ser opcional en actualizaciones
 
     @Size(max = 50)
     private String firstName;
@@ -32,9 +34,9 @@ public class UserRequestDTO {
     @Size(max = 20)
     private String phone;
 
-    @Size(max = 20)
+    @Size(max = 8)
     private String dni;
 
-    private LocalDate birthDate;
-    private Set<Long> roleIds;
+    @Size(max = 255)
+    private String photo;
 }

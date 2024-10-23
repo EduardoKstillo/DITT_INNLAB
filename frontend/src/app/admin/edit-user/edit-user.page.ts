@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { ToastController } from '@ionic/angular';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-edit-user',
@@ -10,91 +11,133 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['./edit-user.page.scss'],
 })
 export class EditUserPage implements OnInit {
-
   userId: number;
-  userForm: FormGroup = this.fb.group({});
-  userRoles: string[] = ['ROLE_USER', 'ROLE_MODERATOR', 'ROLE_ADMIN']; // Lista de roles disponibles
-  selectedRoles: string[] = []; // Roles seleccionados por el usuario
-  submitted = false;  // <-- Nueva propiedad para seguimiento de envío de formulario
+  userForm: FormGroup;
+  submitted = false;
+  selectedRoles: string[] = [];
+  roles = [
+    { id: 'admin', name: 'Administrador' },
+    { id: 'mod', name: 'Moderador' },
+    { id: 'user', name: 'Usuario' },
+  ];
 
   constructor(
+    private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private fb: FormBuilder,
     private userService: UserService,
-    private router: Router,
-    private toastController: ToastController
+    private authService: AuthService,
+    private toastController: ToastController,
+    private router: Router
   ) {
-    this.userId = +this.route.snapshot.paramMap.get('id')!;
-   }
-
-  ngOnInit() {
-    // Inicializar el formulario
-    this.userForm = this.fb.group({
+    this.userForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      university: ['', Validators.required],
+      university: [''],
       phone: [''],
       dni: ['', Validators.required],
-      roles: [[], Validators.required] // Añadimos que roles sea requerido
+      password: [''],
     });
 
-    this.loadUserDetails();
+    const id = this.route.snapshot.paramMap.get('id');
+    this.userId = id ? +id : 0;
   }
 
-  loadUserDetails() {
-    this.userService.getUserById(this.userId).subscribe((user) => {
-      this.userForm.patchValue({
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        university: user.university,
-        phone: user.phone,
-        dni: user.dni,
-        roles: user.roles
-      });
-      this.selectedRoles = user.roles;
-    });
-  }
+  ngOnInit() {
 
-  onRoleChange(event: CustomEvent, role: string) {
-    if (event.detail.checked) {
-      this.selectedRoles.push(role);
+    console.log("es admin: ", this.hasAdminRole())
+    // Si no es admin y no es el propietario de los datos
+    if (!this.hasAdminRole() && this.authService.getLoggedInUserId() !== this.userId){
+      this.router.navigate(['/unauthorized']);
     } else {
-      this.selectedRoles = this.selectedRoles.filter(r => r !== role);
+      this.loadUserData();
     }
-    
-    // Actualizamos el campo roles del formulario cada vez que cambia el rol seleccionado
-    this.userForm.get('roles')?.setValue(this.selectedRoles);
-    this.userForm.get('roles')?.updateValueAndValidity();
+
   }
+
+  hasAdminRole(): boolean {
+    return this.authService.hasRole('ROLE_ADMIN'); 
+  }
+
+  async loadUserData() {
+    try {
+      const userData = await this.userService.getUserById(this.userId).toPromise();
+      this.userForm.patchValue({
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        email: userData.email,
+        university: userData.university,
+        phone: userData.phone,
+        dni: userData.dni,
+        password: '',
+      });
+  
+      // Inicializa los roles seleccionados
+      this.selectedRoles = userData.roles.map((role: string) => {
+        // Asegúrate de que solo obtienes 'mod' en lugar de 'moderador'
+        if (role === 'ROLE_MODERATOR') {
+          return 'mod';
+        }
+        return role.replace('ROLE_', '').toLowerCase();
+      });
+    } catch (error) {
+      this.presentToast('Error al cargar los datos del usuario.');
+    }
+  }
+  
 
   async saveUser() {
-    this.submitted = true; // Marcamos como enviado
-
+    this.submitted = true;
+  
     if (this.userForm.valid) {
-      const updatedUser = {
+      const userData = {
         ...this.userForm.value,
-        roles: this.selectedRoles
+        roles: [...new Set(this.selectedRoles)], // Elimina duplicados
       };
-
-      this.userService.updateUser(this.userId, updatedUser).subscribe(
-        async () => {
-          const toast = await this.toastController.create({
-            message: 'Usuario actualizado con éxito.',
-            duration: 2000
-          });
-          toast.present();
-          this.router.navigate(['/users']); // Redirige a la lista de usuarios
-        },
-        async (error) => {
-          const toast = await this.toastController.create({
-            message: 'Error al actualizar el usuario.',
-            duration: 2000
-          });
-          toast.present();
-        }
-      );
+  
+      // Solo agrega la contraseña si se ha modificado
+      if (!this.userForm.value.password) {
+        delete userData.password;
+      }
+  
+      console.log('Roles a enviar:', userData.roles); // Verifica aquí los roles
+  
+      try {
+        await this.userService.updateUser(this.userId, userData).toPromise();
+        this.presentToast('Usuario actualizado exitosamente.');
+      } catch (error) {
+        this.presentToast('Error al actualizar el usuario.');
+      }
     }
+  }
+  
+
+  onRoleChange(event: any, roleId: string) {
+    // Verifica si el checkbox está marcado
+    if (event.detail.checked) {
+      // Solo agregar si no está ya en la lista
+      if (!this.selectedRoles.includes(roleId)) {
+        // Si se selecciona 'mod', se añade 'mod' en lugar de 'moderador'
+        if (roleId === 'mod') {
+          this.selectedRoles.push(roleId);
+        } else if (roleId === 'admin' || roleId === 'user') {
+          this.selectedRoles.push(roleId);
+        }
+      }
+    } else {
+      // Eliminar el rol si el checkbox se desmarca
+      this.selectedRoles = this.selectedRoles.filter(role => role !== roleId);
+    }
+  }
+  
+  
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 2000,
+      position: 'top'
+    });
+    toast.present();
   }
 }
