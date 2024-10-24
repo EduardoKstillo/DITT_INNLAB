@@ -3,7 +3,7 @@ ion-header, ion-toolbar {
   color: var(--ion-text-color);
 }
 
-.update-device-container {
+.update-project-container {
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
@@ -21,6 +21,14 @@ ion-input {
   color: var(--ion-text-color);
 }
 
+ion-textarea {
+  --border-radius: 10px; 
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); 
+  background: var(--ion-input-background);
+  color: var(--ion-text-color);
+}
+
 
 ion-select {
   margin-bottom: 20px;
@@ -29,7 +37,7 @@ ion-select {
   color: var(--ion-text-color);
 }
 
-.update-device-btn {
+.update-project-btn {
   --background: linear-gradient(135deg, var(--ion-color-primary), #00c6ff);
   --color: var(--ion-color-primary-contrast);
   border-radius: 10px;

@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Actualizar Proyecto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="update-project-container">
+    <form #updateProjectForm="ngForm" (ngSubmit)="updateProject()" novalidate>
+
+      <!-- Nombre del Proyecto -->
+      <div class="input-container">
+        <ion-input label="Nombre del Proyecto" label-placement="floating" fill="outline" placeholder="Nombre del proyecto" [(ngModel)]="projectData.name" name="name" required>
+          <ion-icon slot="start" name="document-text-outline" class="input-icon"></ion-icon>
+        </ion-input>
+        <div *ngIf="updateProjectForm.submitted || updateProjectForm.form.get('name')?.touched">
+          <div *ngIf="updateProjectForm.form.get('name')?.errors?.['required']" class="error-message">
+            El nombre del proyecto es obligatorio.
+          </div>
+        </div>
+      </div>
+
+      <!-- Descripción del Proyecto -->
+      <div class="input-container">
+        <ion-textarea label="Descripción" label-placement="floating" fill="outline" placeholder="Descripción del proyecto" [(ngModel)]="projectData.description" name="description" required>
+          <ion-icon slot="start" name="information-circle-outline" class="input-icon"></ion-icon>
+        </ion-textarea>
+        <div *ngIf="updateProjectForm.submitted || updateProjectForm.form.get('description')?.touched">
+          <div *ngIf="updateProjectForm.form.get('description')?.errors?.['required']" class="error-message">
+            La descripción es obligatoria.
+          </div>
+        </div>
+      </div>
+
+      <!-- Estado del Proyecto -->
+      <div class="input-container">
+        <ion-select label="Estado del Proyecto" label-placement="floating" fill="outline" [(ngModel)]="projectData.status" name="status" required>
+          <ion-select-option value="ACTIVO">Activo</ion-select-option>
+          <ion-select-option value="CONCLUIDO">Concluido</ion-select-option>
+        </ion-select>
+        <div *ngIf="updateProjectForm.submitted || updateProjectForm.form.get('status')?.touched">
+          <div *ngIf="updateProjectForm.form.get('status')?.errors?.['required']" class="error-message">
+            El estado es obligatorio.
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón de Actualizar Proyecto -->
+      <ion-button expand="full" type="submit" class="update-project-btn" [disabled]="!updateProjectForm.valid">Actualizar Proyecto</ion-button>
+    </form>
+  </div>
+</ion-content>

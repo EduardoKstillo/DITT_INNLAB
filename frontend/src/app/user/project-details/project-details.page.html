@@ -34,7 +34,7 @@
                   fill="outline" 
                   color="danger" 
                   slot="end" 
-                  *ngIf="project?.leaderName === loggedInUserName" 
+                  *ngIf="project?.leaderName === loggedInUserName && project.status === 'ACTIVO'" 
                   (click)="confirmRemoveMember(member.id)">
                   Remover
                 </ion-button>
@@ -76,7 +76,7 @@
     </ion-row>
   </ion-grid>
   <!-- Botón flotante ion-fab para líder -->
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="project?.leaderName === loggedInUserName">
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="project?.leaderName === loggedInUserName && project.status === 'ACTIVO'">
     <ion-fab-button>
       <ion-icon name="chevron-up-circle"></ion-icon>
     </ion-fab-button>

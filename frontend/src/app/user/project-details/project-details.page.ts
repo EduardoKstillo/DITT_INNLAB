@@ -47,6 +47,7 @@ export class ProjectDetailsPage implements OnInit {
     this.projectService.getProjectWithMembers(projectId).subscribe(
         (response) => {
             this.project = response;
+            console.log(this.project);
         },
         async (error) => {
             console.error('Error fetching project details:', error);

@@ -47,16 +47,24 @@ public class ProjectService {
         Optional<User> leader = userRepository.findById(leaderId);
 
         if (leader.isPresent()) {
+            // Buscar proyectos activos del líder
             List<Project> activeProjects = projectRepository.findActiveProjectsByLeaderId(leaderId);
-            if (!activeProjects.isEmpty()) {
+
+            // Validar si el líder ya tiene un proyecto en estado "ACTIVO"
+            boolean hasActiveProject = activeProjects.stream()
+                    .anyMatch(project -> project.getStatus() == ProjectStatus.ACTIVO);
+
+            if (hasActiveProject) {
                 throw new IllegalArgumentException("Error: Ya tienes un proyecto activo y no puedes crear otro.");
             }
 
+            // Si no tiene proyectos activos, se procede a crear el nuevo proyecto
             Project project = new Project();
             project.setName(projectDTO.getName());
             project.setDescription(projectDTO.getDescription());
             project.setLeader(leader.get());
             project.setStatus(ProjectStatus.ACTIVO);
+
             project = projectRepository.save(project);
 
             return project;
@@ -71,15 +79,29 @@ public class ProjectService {
 
     @Transactional
     public Project updateProject(Long id, ProjectDTO projectDTO) {
+        System.out.println(projectDTO);
         Project project = getProjectById(id);
         project.setName(projectDTO.getName());
         project.setDescription(projectDTO.getDescription());
 
+        // Convertir el estado de String a enum y comparar
+        if (projectDTO.getStatus() != null) {
+            try {
+                ProjectStatus status = ProjectStatus.valueOf(projectDTO.getStatus());
+                project.setStatus(status);
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Estado inválido: " + projectDTO.getStatus());
+            }
+        }
+
+        // Actualizar líder
+        /*
         if (projectDTO.getLeaderId() != null) {
             User leader = userRepository.findById(projectDTO.getLeaderId())
                     .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con id: " + projectDTO.getLeaderId()));
             project.setLeader(leader);
         }
+         */
 
         return projectRepository.save(project);
     }
@@ -153,6 +175,7 @@ public class ProjectService {
                     dto.setEmail(user.getEmail());
                     dto.setFirstName(user.getFirstName());
                     dto.setLastName(user.getLastName());
+
                     return dto;
                 })
                 .collect(Collectors.toList());
@@ -162,6 +185,7 @@ public class ProjectService {
         projectDTO.setLeaderName( project.getLeader().getEmail());
         projectDTO.setName(project.getName());
         projectDTO.setDescription(project.getDescription());
+        projectDTO.setStatus(project.getStatus());
         projectDTO.setMembers(memberDTOs);
 
         return projectDTO;

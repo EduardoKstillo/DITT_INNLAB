@@ -137,6 +137,10 @@ const routes: Routes = [
     loadChildren: () => import('./notifications/notifications.module').then( m => m.NotificationsPageModule),
     canActivate: [RoleGuard],
     data: { expectedRoles: ['ROLE_USER'] }
+  },
+  {
+    path: 'edit-project/:projectId',
+    loadChildren: () => import('./user/edit-project/edit-project.module').then( m => m.EditProjectPageModule)
   }
 ];
 

@@ -57,8 +57,7 @@ export class MyProjectsPage implements OnInit {
     this.router.navigate(['/project-details', projectId]); // Navegar a la página de detalles del proyecto
   }
 
-  async deleteProject(projectId: number, event: Event) {
-    event.stopPropagation(); // Prevenir la propagación del evento al ion-item
+  async deleteProject(projectId: number) {
     const alert = await this.alertController.create({
       header: 'Confirmar',
       message: '¿Estás seguro de que deseas eliminar este proyecto?',
