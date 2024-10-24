@@ -25,13 +25,19 @@ export class DeviceListPage implements OnInit {
     this.loadDevices();  // También recargar los dispositivos cuando entras a la página
   }
 
-  loadDevices() {
+  loadDevices(event?: any) {
     this.deviceService.getAllDevices().subscribe(
       (response) => {
         this.devices = response; // Asignar la respuesta a la variable
+        if (event) {
+          event.target.complete(); // Finaliza el refresco
+        }
       },
       (error) => {
         console.error('Error fetching devices:', error);
+        if (event) {
+          event.target.complete(); // Finaliza el refresco
+        }
       }
     );
   }

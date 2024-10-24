@@ -8,6 +8,16 @@
 </ion-header>
 
 <ion-content class="ion-padding custom-content">
+  <!-- Refresher -->
+  <ion-refresher slot="fixed" (ionRefresh)="loadInvitations($event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-outline"
+      pullingText="Desliza para refrescar"
+      refreshingSpinner="circles"
+      refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <ion-grid>
     <ion-row>
       <ion-col size="12" *ngIf="invitations.length === 0">

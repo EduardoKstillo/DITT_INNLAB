@@ -69,7 +69,7 @@ public class ProjectService {
 
             return project;
         } else {
-            throw new IllegalArgumentException("Error: No se pudo encontrar el usuario.");
+            throw new IllegalArgumentException("No se pudo encontrar el usuario.");
         }
     }
 

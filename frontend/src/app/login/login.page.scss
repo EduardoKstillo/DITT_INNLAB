@@ -102,3 +102,25 @@ ion-title {
   margin-top: 5px;
   margin-bottom: 40px;
 }
+
+/* Estilos para el toast */
+.toast-success {
+  background-color: #28a745 !important; /* Verde para éxito */
+  color: white !important; /* Color del texto */
+}
+
+.toast-error {
+  background-color: #dc3545 !important; /* Rojo para error */
+  color: white !important; /* Color del texto */
+}
+
+.toast-warning {
+  background-color: #ffc107 !important; /* Amarillo para advertencia */
+  color: black !important; /* Color del texto */
+}
+
+/* Añade esta regla para asegurar que el texto es legible */
+.toast {
+  padding: 10px; /* Asegúrate de que el padding es suficiente */
+  border-radius: 5px; /* Bordes redondeados para el toast */
+}

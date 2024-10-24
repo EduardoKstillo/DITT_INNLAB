@@ -27,16 +27,25 @@ export class AllProjectsPage implements OnInit {
         this.loadAllProjects();
       }
     });
-
   }
 
-  loadAllProjects() {
+  ionViewWillEnter() {
+    this.loadAllProjects();  // También recargar los dispositivos cuando entras a la página
+  }
+
+  loadAllProjects(event?: any) {
     this.projectService.getAllProjects().subscribe(
       (response) => {
         this.projects = response; // Cargar proyectos
+        if (event) {
+          event.target.complete(); // Termina el refresco si existe
+        }
       },
       (error) => {
         console.error('Error fetching projects:', error);
+        if (event) {
+          event.target.complete(); // Termina el refresco incluso en caso de error
+        }
       }
     );
   }

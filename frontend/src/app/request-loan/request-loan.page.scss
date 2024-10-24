@@ -38,14 +38,6 @@ ion-modal::part(backdrop) {
   opacity: 1;
 }
 
-ion-datetime {
-  --background: var(--ion-background-color);
-  --background-rgb: 255, 241, 242;
-
-  border-radius: 16px;
-  box-shadow: 0 1px 5px rgba(146, 146, 146, 0.363);
-}
-
 ion-modal {
   --background: var(--ion-background-color); // Color de fondo
   --color: var(--ion-text-color); // Color del texto

@@ -16,13 +16,23 @@ export class UserListPage implements OnInit {
     this.getUsers();
   }
 
-  getUsers() {
+  ionViewWillEnter() {
+    this.getUsers();  // También recargar las invitaciones cuando entras a la página
+  }
+
+  getUsers(event?: any) {
     this.userService.getAllUsers().subscribe(
       (data) => {
         this.users = data;
+        if (event) {
+          event.target.complete(); // Finaliza el refresco
+        }
       },
       (error) => {
         console.error('Error al obtener usuarios', error);
+        if (event) {
+          event.target.complete(); // Finaliza el refresco
+        }
       }
     );
   }

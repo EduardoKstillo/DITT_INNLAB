@@ -44,9 +44,11 @@ export class CreateProjectPage {
         this.router.navigate(['/my-projects']); // Regresar a la lista de proyectos
       },
       async (error) => {
+        console.log(error);
+        const errorMessage = error.error?.message || 'Error desconocido al crear el proyecto.';
         const alert = await this.alertController.create({
           header: 'Error',
-          message: 'Error al crear el proyecto.',
+          message: errorMessage,
           buttons: ['OK'],
         });
         await alert.present();

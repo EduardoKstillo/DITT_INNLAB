@@ -184,4 +184,17 @@ export class ProjectDetailsPage implements OnInit {
     // Navegar a la página de solicitud de préstamo, pasando el projectId
     this.router.navigate(['/request-loan', { projectId: this.project.id }]);
   }
+
+  async refreshPage(event: any) {
+    const projectIdParam = this.route.snapshot.paramMap.get('id');
+    const projectId = projectIdParam ? +projectIdParam : null;
+
+    if (projectId !== null) {
+      this.loadProjectDetails(projectId);
+      this.loadLoanRequests(projectId);
+    }
+
+    // Finaliza el refresco después de cargar los datos
+    event.target.complete();
+  }
 }

@@ -47,18 +47,6 @@
         </div>
       </div>
 
-      <!-- Serie -->
-      <div class="input-container">
-        <ion-input label="Serie" label-placement="floating" fill="outline" placeholder="Serie del dispositivo" [(ngModel)]="deviceData.series" name="series" required>
-          <ion-icon slot="start" name="id-card-outline" class="input-icon"></ion-icon>
-        </ion-input>
-        <div *ngIf="updateDeviceForm.submitted || updateDeviceForm.form.get('series')?.touched">
-          <div *ngIf="updateDeviceForm.form.get('series')?.errors?.['required']" class="error-message">
-            La serie es obligatoria.
-          </div>
-        </div>
-      </div>
-
       <!-- Cantidad -->
       <div class="input-container">
         <ion-input label="Cantidad" label-placement="floating" fill="outline" placeholder="Cantidad del dispositivo" [(ngModel)]="deviceData.quantity" name="quantity" type="number" required>
@@ -71,19 +59,17 @@
         </div>
       </div>
 
-      <!-- Adicional -->
-      <div class="input-container">
-        <ion-input label="Adicional" label-placement="floating" fill="outline" placeholder="Información adicional" [(ngModel)]="deviceData.additional" name="additional"></ion-input>
-      </div>
-
-      <!-- Color -->
-      <div class="input-container">
-        <ion-input label="Color" label-placement="floating" fill="outline" placeholder="Color del dispositivo" [(ngModel)]="deviceData.color" name="color" required>
-          <ion-icon slot="start" name="color-palette-outline" class="input-icon"></ion-icon>
-        </ion-input>
-        <div *ngIf="updateDeviceForm.submitted || updateDeviceForm.form.get('color')?.touched">
-          <div *ngIf="updateDeviceForm.form.get('color')?.errors?.['required']" class="error-message">
-            El color es obligatorio.
+      <div *ngIf="deviceData.type == 'IoT'">
+        <div class="input-container">
+          <ion-select label="sensorType" label-placement="floating" fill="outline" [(ngModel)]="deviceData.sensorType" name="sensorType" required>
+            <ion-select-option value="Complemento">Complemento</ion-select-option>
+            <ion-select-option value="Plataforma">Plataforma</ion-select-option>
+            <ion-select-option value="Sensor">Sensor</ion-select-option>
+          </ion-select>
+          <div *ngIf="updateDeviceForm.submitted || updateDeviceForm.form.get('sensorType')?.touched">
+            <div *ngIf="updateDeviceForm.form.get('sensorType')?.errors?.['required']" class="error-message">
+              El sensorType es obligatorio.
+            </div>
           </div>
         </div>
       </div>
@@ -92,12 +78,37 @@
       <div class="input-container">
         <ion-select label="Estado" label-placement="floating" fill="outline" [(ngModel)]="deviceData.status" name="status" required>
           <ion-select-option value="DISPONIBLE">Disponible</ion-select-option>
-          <ion-select-option value="NO DISPONIBLE">No Disponible</ion-select-option>
+          <ion-select-option value="NO_DISPONIBLE">No Disponible</ion-select-option>
         </ion-select>
         <div *ngIf="updateDeviceForm.submitted || updateDeviceForm.form.get('status')?.touched">
           <div *ngIf="updateDeviceForm.form.get('status')?.errors?.['required']" class="error-message">
             El estado es obligatorio.
           </div>
+        </div>
+      </div>
+
+      <div *ngIf="deviceData.type !== 'IoT'">
+        <!-- Serie -->
+        <div class="input-container">
+          <ion-input label="Serie" label-placement="floating" fill="outline" placeholder="Serie del dispositivo" [(ngModel)]="deviceData.series" name="series" required>
+            <ion-icon slot="start" name="id-card-outline" class="input-icon"></ion-icon>
+          </ion-input>
+          <div *ngIf="updateDeviceForm.submitted || updateDeviceForm.form.get('series')?.touched">
+            <div *ngIf="updateDeviceForm.form.get('series')?.errors?.['required']" class="error-message">
+              La serie es obligatoria.
+            </div>
+          </div>
+        </div>
+          <!-- Adicional -->
+        <div class="input-container">
+          <ion-input label="Adicional" label-placement="floating" fill="outline" placeholder="Información adicional" [(ngModel)]="deviceData.additional" name="additional"></ion-input>
+        </div>
+
+        <!-- Color -->
+        <div class="input-container">
+          <ion-input label="Color" label-placement="floating" fill="outline" placeholder="Color del dispositivo" [(ngModel)]="deviceData.color" name="color">
+            <ion-icon slot="start" name="color-palette-outline" class="input-icon"></ion-icon>
+          </ion-input>
         </div>
       </div>
 

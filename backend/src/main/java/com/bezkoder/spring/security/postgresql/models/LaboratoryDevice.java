@@ -25,22 +25,17 @@ LaboratoryDevice {
   @NotBlank
   private String description;
 
-  @NotBlank
   private String characteristics;
 
-  @NotBlank
   private String series;
 
   @NotNull
   private Integer quantity;
 
-  @NotBlank
   private String additional;
 
-  @NotBlank
   private String sensorType;
 
-  @NotBlank
   private String color;
 
   @Enumerated(EnumType.STRING)

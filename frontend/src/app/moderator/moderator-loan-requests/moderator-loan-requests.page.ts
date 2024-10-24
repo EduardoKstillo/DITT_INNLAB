@@ -19,13 +19,23 @@ export class ModeratorLoanRequestsPage implements OnInit {
     this.loadLoanRequests();
   }
 
-  loadLoanRequests() {
+  ionViewWillEnter() {
+    this.loadLoanRequests();  // También recargar las invitaciones cuando entras a la página
+  }
+
+  loadLoanRequests(event?: any) {
     this.loanRequestService.getLoanRequests().subscribe(
       (response) => {
         this.loanRequests = response; // Cargar solicitudes de préstamo
+        if (event) {
+          event.target.complete(); // Finaliza el refresco
+        }
       },
       (error) => {
         console.error('Error fetching loan requests:', error);
+        if (event) {
+          event.target.complete(); // Finaliza el refresco
+        }
       }
     );
   }

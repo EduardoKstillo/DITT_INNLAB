@@ -35,6 +35,7 @@ export class DeviceUpdatePage implements OnInit {
       this.deviceService.getDeviceById(this.deviceId).subscribe(
         (response) => {
           this.deviceData = response; // Asignar la respuesta a la variable
+          console.log(this.deviceData)
         },
         (error) => {
           console.error('Error fetching device details:', error);
@@ -56,6 +57,7 @@ export class DeviceUpdatePage implements OnInit {
           this.router.navigate(['/device-list']); // Regresar a la lista de dispositivos
         },
         async (error) => {
+          console.log(error);
           const alert = await this.alertController.create({
             header: 'Error',
             message: 'Error al actualizar el dispositivo.',

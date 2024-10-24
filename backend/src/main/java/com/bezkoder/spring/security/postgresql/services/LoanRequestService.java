@@ -122,7 +122,7 @@ public class LoanRequestService {
     // Validar la cantidad de dispositivos solicitados.
     private void validateDeviceQuantity(int requestedQuantity, int availableQuantity) {
         if (requestedQuantity > availableQuantity) {
-            throw new IllegalArgumentException("Requested quantity exceeds available stock.");
+            throw new IllegalArgumentException("La cantidad solicitada excede el stock disponible.");
         }
     }
     private void notifyModerators(LoanRequest loanRequest, String title, String body) {
@@ -183,19 +183,20 @@ public class LoanRequestService {
         // Validar stock antes de aprobar
         for (LoanRequestDevice loanRequestDevice : loanRequest.getLoanRequestDevices()) {
             LaboratoryDevice device = laboratoryDeviceRepository.findById(loanRequestDevice.getDevice().getId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Device not found"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Dispositivo no encontrado"));
             // Verificar si hay suficiente stock
             if (loanRequestDevice.getQuantity() > device.getQuantity()) {
-                throw new IllegalArgumentException("Not enough stock for device ID " + device.getId());
+                throw new IllegalArgumentException("No hay suficiente stock para el dispositivo " + device.getDescription());
             }
         }
     }
+    
     public void approveLoanRequest(Long id, Long moderatorId) {
         LoanRequest loanRequest = loanRequestRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Loan request not found"));
+                .orElseThrow(() -> new RuntimeException("Solicitud de préstamo no encontrada"));
 
         if (loanRequest.getStatus() != LoanRequestStatus.PENDING) {
-            throw new IllegalStateException("This loan request has already been processed and cannot be approved again.");
+            throw new IllegalStateException("Esta solicitud de préstamo ya ha sido procesada y no puede aprobarse nuevamente.");
         }
 
         User moderator = userRepository.findById(moderatorId)
@@ -235,7 +236,7 @@ public class LoanRequestService {
                 .orElseThrow(() -> new RuntimeException("Loan request not found"));
 
         if (loanRequest.getStatus() != LoanRequestStatus.PENDING) {
-            throw new IllegalStateException("This loan request has already been processed and cannot be rejected again.");
+            throw new IllegalStateException("Esta solicitud de préstamo ya ha sido procesada y no puede ser rechazada nuevamente.");
         }
 
         User moderator = userRepository.findById(moderatorId)
